@@ -30,6 +30,7 @@ class DetailedNoteRootView :UIView {
         imageView.backgroundColor = .blue
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 8
         return imageView
     }()
     
