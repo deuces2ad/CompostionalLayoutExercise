@@ -17,6 +17,10 @@ class AppThemeColors {
         }
     }
     
+    static let ButtonShadowColor : UIColor = .lightGray.withAlphaComponent(0.3)
+    
+  static let themeBlackColor = UIColor.init(hexString: "#252525")
+
 }
 
 let notesColors = ["#F2AB90","#F2CD7F","#E5F09B","#CF91D9","#E88EB1","#81DEEA","#81CCC4"]

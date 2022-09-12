@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import UIKit
 
 struct NewNoteInfo {
     let noteTitle : String
-    let noteImage : String
-    let noteDiscription : String
+    let noteImage : UIImage?
+    let noteDescription : String
 }

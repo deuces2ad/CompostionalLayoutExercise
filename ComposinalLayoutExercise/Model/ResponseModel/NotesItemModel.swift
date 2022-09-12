@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NotesItemsModel :Decodable {
+struct NotesItemModel :Decodable {
     let id: String
     let archived: Bool
     let title, body: String
