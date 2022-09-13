@@ -21,4 +21,5 @@ struct NotesItemModel :Decodable {
         case image
         case expiryTime = "expiry_time"
     }
+
 }

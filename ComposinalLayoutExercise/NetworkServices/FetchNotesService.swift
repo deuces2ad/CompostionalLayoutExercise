@@ -10,11 +10,11 @@ import Combine
 
 
 class FetchNotes {
-     static var cancellables = Set<AnyCancellable>()
+     static var cancellable = Set<AnyCancellable>()
     
     static func getNotes<T:Decodable>(with type: T.Type) -> Future<[T],Error>{
         return Future{ promise in
-            let urlString = "https://raw.githubusercontent.com/RishabhRaghunath/JustATest/master/notes"
+            let urlString = AppInfo.webServiceURL
             guard let request = URL(string: urlString) else {
                 return promise(.failure(NetworkError.InvalidURL))
             }
@@ -30,12 +30,12 @@ class FetchNotes {
                 .sink(receiveCompletion: { (completion) in
                     switch completion {
                     case .finished:
-                        print("swdws")
+                        print("Note Fetched successfully!")
                     case .failure(_):
                         promise(.failure(NetworkError.InvalidURL))
                     }
                 }, receiveValue: {promise(.success($0))})
-                .store(in: &cancellables)
+                .store(in: &cancellable)
         }
     }
 }

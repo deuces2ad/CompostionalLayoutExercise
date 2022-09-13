@@ -10,47 +10,51 @@ import UIKit
 
 class NotesCollectionViewCell : UICollectionViewCell {
 
-    static let cellIdenttifier = "NotesCollectionViewCell"
+    static let cellIdentifier = "NotesCollectionViewCell"
    
+    //MARK: - life cycle
     override func layoutSubviews() {
         super.layoutSubviews()
         layoutUI()
-        setContraints()
+        setConstraints()
     }
     
-    private lazy var titleLbl: UILabel = {
-        let lbl = UILabel()
-        lbl.textColor = .black
-        lbl.adjustsFontSizeToFitWidth = true
-        lbl.numberOfLines = 3
-        lbl.font = UIFont(name: "Avenir Book", size: 22.0)
-        lbl.textAlignment = .center
-        return lbl
+    //MARK: - Properties
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 3
+        label.font = AppFont.noteTitleFontForCollectionViewCell
+        label.textAlignment = .center
+        return label
     }()
     
-    private lazy var dateLbl : UILabel = {
-        let lbl = UILabel()
-        lbl.textColor = .black
-        lbl.adjustsFontSizeToFitWidth = true
-        lbl.numberOfLines = 2
-        lbl.font = UIFont(name: "Avenir Book", size: 16)
-        lbl.textAlignment = .right
-        return lbl
+    private lazy var noteCreationDateLabel : UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 2
+        label.font = UIFont(name: "Avenir Book", size: 16)
+        label.textAlignment = .right
+        return label
     }()
     
-    func fillInfo(with info:NotesItemsModel){
-        self.titleLbl.text = info.title
+    //MARK: - Methods
+    func fillInfo(with info:NotesItemModel) {
+        self.titleLabel.text = info.title
         let date = DateParser.convertToFormatedDate(with: info.createdTime)
-        self.dateLbl.text = date
+        self.noteCreationDateLabel.text = date
     }
     
-    private func layoutUI(){
-        addSubview(titleLbl)
-        addSubview(dateLbl)
+    private func layoutUI() {
+        addSubview(titleLabel)
+        addSubview(noteCreationDateLabel)
     }
     
-    private func setContraints(){
-        titleLbl.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor,padding: .init(top: 10, left: 10, bottom: 10, right: 10))
-        dateLbl.anchor(top: titleLbl.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor,padding: .init(top: 0, left: 0, bottom: 15, right: 10))
+    private func setConstraints() {
+        titleLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor,padding: .init(top: 10, left: 10, bottom: 10, right: 10))
+        
+        noteCreationDateLabel.anchor(top: titleLabel.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor,padding: .init(top: 0, left: 0, bottom: 15, right: 10))
     }
 }

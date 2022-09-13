@@ -10,27 +10,22 @@ import UIKit
 
 class DetailedNoteViewController : UIViewController {
     
-    private var noteInfo : NotesItemsModel?
+    //MARK: - Private Variables
+    private var noteInfo : NotesItemModel?
     
+    //MARK: - Life Cycle Methods
     override func loadView() {
         super.loadView()
         view = rootView
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = false
     }
     
-    lazy var rootView : DetailedNoteRootView = {
-        let rootView = DetailedNoteRootView()
-        rootView.backgroundColor = .black
-        rootView.fillInfo(with: noteInfo!)
-        return rootView
-    }()
-    
-    init(notesInfo: NotesItemsModel){
+    //MARK: - Initialiser Method
+    init(notesInfo: NotesItemModel) {
         self.noteInfo = notesInfo
         super.init(nibName: nil, bundle: nil)
     }
@@ -39,5 +34,11 @@ class DetailedNoteViewController : UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    //MARK: - Properties
+    lazy var rootView : DetailedNoteRootView = {
+        let rootView = DetailedNoteRootView()
+        rootView.backgroundColor = .black
+        rootView.fillInfo(with: noteInfo!)
+        return rootView
+    }()
 }

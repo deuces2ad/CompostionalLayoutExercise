@@ -10,7 +10,7 @@ import UIKit
 
 class LayoutBuilder {
     
-    static func createCompostionalLayout() -> UICollectionViewCompositionalLayout {
+    static func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         
         //first Item
         let item = CompositionalLayout.createItem(width: .fractionalWidth(0.5), height: .fractionalHeight(1.0), spacing: 5)
