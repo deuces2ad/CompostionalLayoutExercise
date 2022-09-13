@@ -8,12 +8,12 @@
 import UIKit
 import Combine
 
-class AddNewNoteViewController : UIViewController {
+class NewNoteViewController : UIViewController {
     
     //MARK: - Private Variables
-    private var cancellable = [AnyCancellable]()
+    private var cancellable = Set<AnyCancellable>()
     private var userSelectedNoteImage : UIImage?
-    private let addNewNoteViewModel = AddNewNoteViewModel()
+    private let addNewNoteViewModel = NoteViewModel()
     private let noteManager = NoteManager()
     
     @Published var newNoteListener : NoteInformation?
@@ -44,7 +44,6 @@ class AddNewNoteViewController : UIViewController {
        }()
     
     //MARK: - Private Methods
-    //todo: naming need to be taken care..
     private func updateNavBarProperties() {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.isHidden = true
@@ -66,12 +65,11 @@ class AddNewNoteViewController : UIViewController {
         rootView.saveNoteListener.sink { [weak self] _ in
             guard let self = self else { return }
             
-            let newNoteInfo = self.addNewNoteViewModel.createNewNote(with: self.rootView, for: self.userSelectedNoteImage)
+            let newNoteInfo = self.toNoteInformation(with:self.userSelectedNoteImage)
                 
-                if  let errorMessage = self.addNewNoteViewModel.isNewNoteCreated(with: newNoteInfo){
-                    self.showAlert(with: AppInfo.appName, message: errorMessage)
+                if  let errorMessage = self.addNewNoteViewModel.validateNote(with: newNoteInfo){
+                    self.showAlert(with: UIConstant.alertTitle, message: errorMessage)
                 }else {
-                    print("New Note Created")
                     self.newNoteListener = newNoteInfo
                     self.noteManager.createNote(note: newNoteInfo)
                     self.popViewController()
@@ -85,10 +83,22 @@ class AddNewNoteViewController : UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    func toNoteInformation(with image : UIImage?) -> NoteInformation{
+        
+        let noteTitle = rootView.newNoteTitleTextView.text ?? AppConstant.EMPTY_STRING
+        let noteDescription = rootView.newNoteDescriptionTextView.text ?? AppConstant.EMPTY_STRING
+        let noteImage = image?.pngData()
+        return NoteInformation(id: UUID(),
+                               noteTitle: noteTitle,
+                               noteImage: noteImage,
+                               noteDescription: noteDescription,
+                               noteCreationDate: Date())
+    }
+    
    
 }
 //MARK: - ImagePicker Delegate Method
-extension AddNewNoteViewController : ImagePickerDelegate {
+extension NewNoteViewController : ImagePickerDelegate {
     
     func imagePicker(_ imagePicker: ImagePicker, didSelect image: UIImage) {
         self.userSelectedNoteImage = image
@@ -112,5 +122,6 @@ extension UIViewController {
             self.dismiss(animated: true)
         }
         alert.addAction(action)
+        self.present(alert, animated: true)
     }
 }

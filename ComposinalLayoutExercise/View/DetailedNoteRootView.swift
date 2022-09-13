@@ -80,10 +80,19 @@ class DetailedNoteRootView :UIView {
         noteDescriptionTxtView.anchor(top: noteCreatedDateLabel.bottomAnchor, leading: scrollView.leadingAnchor, bottom: scrollView.bottomAnchor, trailing: trailingAnchor,padding: .init(top: 10, left: 30, bottom: 10, right: 30))
     }
     
+    //TODO: ReVisit this image saving logic.
     func fillInfo(with noteInfo : NotesItemModel) {
-        if let imageURL = noteInfo.image {
-            if let url = URL(string: imageURL){
+        if let noteImage = noteInfo.image {
+            if let url = URL(string: noteImage){
                 self.noteHeaderImage.loadImageFrom(url: url)
+            }else{
+                if let noteDataImage = noteImage.data(using: .utf8) {
+                    let abcd = UIImage(data: noteDataImage)
+                    self.noteHeaderImage.image = abcd
+                }
+//                if let data = UI{
+//                    self.noteHeaderImage.image = UIImage(data: data)
+//                }
             }
         }else{
             noteImageHeightAnchor = 0

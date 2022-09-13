@@ -11,7 +11,7 @@ import UIKit
 class DetailedNoteViewController : UIViewController {
     
     //MARK: - Private Variables
-    private var noteInfo : NotesItemModel?
+    private var noteInfo : NotesItemModel
     
     //MARK: - Life Cycle Methods
     override func loadView() {
@@ -38,7 +38,7 @@ class DetailedNoteViewController : UIViewController {
     lazy var rootView : DetailedNoteRootView = {
         let rootView = DetailedNoteRootView()
         rootView.backgroundColor = .black
-        rootView.fillInfo(with: noteInfo!)
+        rootView.fillInfo(with: noteInfo)
         return rootView
     }()
 }

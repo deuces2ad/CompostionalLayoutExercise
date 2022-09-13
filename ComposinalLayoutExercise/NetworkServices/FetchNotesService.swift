@@ -1,5 +1,5 @@
 //
-//  FetchNotesService.swift
+//  NoteService.swift
 //  ComposinalLayoutExercise
 //
 //  Created by Abhishek Dhiman on 10/09/22.
@@ -9,13 +9,12 @@ import Foundation
 import Combine
 
 
-class FetchNotes {
+class NoteService {
      static var cancellable = Set<AnyCancellable>()
     
-    static func getNotes<T:Decodable>(with type: T.Type) -> Future<[T],Error>{
+    static func getNotes<T:Decodable>(with type: T.Type) -> Future<[T], Error > {
         return Future{ promise in
-            let urlString = AppInfo.webServiceURL
-            guard let request = URL(string: urlString) else {
+            guard let request = ServiceEndPoint.getNotes else {
                 return promise(.failure(NetworkError.InvalidURL))
             }
             URLSession.shared.dataTaskPublisher(for: request)
@@ -40,7 +39,7 @@ class FetchNotes {
     }
 }
 
-enum NetworkError {
+enum NetworkError : Error {
     case InvalidURL
 }
 
@@ -51,5 +50,4 @@ extension NetworkError : LocalizedError {
             return NSLocalizedString("Invalid URL", comment: "Invalid URL")
         }
     }
-    
 }

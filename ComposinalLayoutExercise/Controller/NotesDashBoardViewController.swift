@@ -50,28 +50,27 @@ class NotesDashBoardViewController: UIViewController {
     private func registerListeners(){
     
         notesDashboardViewModel.$listener
+            .receive(on: DispatchQueue.main)
             .sink { items in
                 let offlineNotes = self.notesDashboardViewModel.createNoteModelFromNotesInformation(with: self.manager.fetchNote()!)
-                self.notesItems = items
                 self.notesItems.append(contentsOf: offlineNotes)
-               
+                self.notesItems.append(contentsOf: items)
                 self.rootView.notesCollectionView.reloadData()
             }.store(in: &observers)
         
-        //Add new Note!
+        ///Add new Note!
         rootView.action.sink {[weak self] message in
-          //navigation
             guard let self = self else {return}
-            
-            let addNewNotesViewController = AddNewNoteViewController()
+            let addNewNotesViewController = NewNoteViewController()
             addNewNotesViewController
                 .$newNoteListener
+//            TODO: Visit this later
                 .compactMap{$0}
                 .map{self.notesDashboardViewModel.createNewModelInfo(with: $0)}
                 .sink { item in
-                self.notesItems.append(item)
-                self.rootView.notesCollectionView.reloadData()
-            }.store(in: &self.observers)
+                    self.notesItems.append(item)
+                    self.rootView.notesCollectionView.reloadData()
+                }.store(in: &self.observers)
             self.navigationController?.pushViewController(addNewNotesViewController, animated: true)
         }
         .store(in: &observers)
@@ -128,7 +127,7 @@ class DateParser {
     static func convertToFormatedDate(with timeInterval:Int) -> String{
         let date = NSDate(timeIntervalSince1970: TimeInterval(timeInterval))
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = AppInfo.appDateFormat
+        dateFormatter.dateFormat = AppConstant.appDateFormat
         dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
         let dateString = dateFormatter.string(from: date as Date)
         return dateString

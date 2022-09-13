@@ -16,7 +16,7 @@ class NotesDashboardViewModel {
     
     // get Notes from API service
     func getNotesItems() {
-        FetchNotes.getNotes(with: NotesItemModel.self)
+        NoteService.getNotes(with: NotesItemModel.self)
             .sink { completion in
                 switch completion {
                 case .failure(let err):
@@ -39,5 +39,13 @@ class NotesDashboardViewModel {
     func createNoteModelFromNotesInformation(with notes: [NoteInformation]) -> [NotesItemModel]{
         return notes.map{self.createNewModelInfo(with: $0)}
     }
+    
+//    func createNoteInformation(with item : NotesItemModel) -> NoteInformation {
+//        return NoteInformation(id: UUID(), noteTitle: item., noteImage: <#T##Data?#>, noteDescription: <#T##String#>, noteCreationDate: <#T##Date#>)
+//    }
+//
+//    func toNoteInformation(for items: [NotesItemModel]) -> [NoteInformation]{
+//        return items.map{}
+//    }
     
 }
