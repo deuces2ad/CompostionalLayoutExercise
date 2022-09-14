@@ -32,8 +32,6 @@ extension CDNote {
                                noteCreationDate: noteCreationDate ?? Date(),
                                noteImageData: noteImage)
     }
-
-
 }
 
 extension CDNote : Identifiable {

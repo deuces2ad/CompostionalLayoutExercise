@@ -80,7 +80,7 @@ class DetailedNoteRootView :UIView {
         noteDescriptionTxtView.anchor(top: noteCreatedDateLabel.bottomAnchor, leading: scrollView.leadingAnchor, bottom: scrollView.bottomAnchor, trailing: trailingAnchor,padding: .init(top: 10, left: 30, bottom: 10, right: 30))
     }
     
-    //TODO: ReVisit this image saving logic.
+   
     func fillInfo(with noteInfo : NoteInformation) {
         if let noteImage = noteInfo.noteImageData {
             self.noteHeaderImage.image = UIImage(data: noteImage)
@@ -106,7 +106,6 @@ class CustomScrollView: UIScrollView {
     super.init(frame: .zero)
     let view = UIView()
     addSubview(view)
-    
     self.containerView = view
     setupView()
   }

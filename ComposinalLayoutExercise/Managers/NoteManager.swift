@@ -31,5 +31,4 @@ struct NoteManager {
     func deleteNote(note: NoteInformation) -> Bool {
         return noteInformationRepository.delete(record: note)
     }
-    
 }

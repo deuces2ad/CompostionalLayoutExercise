@@ -69,6 +69,7 @@ class NewNoteViewController : UIViewController {
     
     private func popViewController() {
         self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -78,7 +79,8 @@ class NewNoteViewController : UIViewController {
         let noteImage = image?.jpegData(compressionQuality: 1.0)
         return NoteInformation(id: UUID(),
                                noteTitle: noteTitle,
-                               noteImage: nil, noteDescription: noteDescription,
+                               noteImage: nil,
+                               noteDescription: noteDescription,
                                noteCreationDate: Date(),
                                noteImageData: noteImage)
     }

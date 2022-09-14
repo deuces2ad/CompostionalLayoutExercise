@@ -20,5 +20,7 @@ struct ServiceEndPoint {
 
 struct UIConstant {
     static let alertTitle = "Daily Note"
+    static let noInternetAlertMessage = "No internet connectivity,please check your internet connection."
+    static let noInternet = "No network connection"
 }
 

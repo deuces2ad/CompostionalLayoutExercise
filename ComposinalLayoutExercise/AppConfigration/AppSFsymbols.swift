@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-enum AppSFsymbols: String {
+enum AppSfSymbols: String {
     case paperclip 
     case chevronBackward = "chevron.backward"
 

@@ -16,7 +16,6 @@ protocol NoteRespository {
     func get(byIdentifier id : UUID) -> NoteInformation?
     func update(note: NoteInformation) -> Bool
     func delete(record: NoteInformation) -> Bool
-    
 }
 
 struct NoteInformationRepository : NoteRespository {
@@ -66,6 +65,8 @@ struct NoteInformationRepository : NoteRespository {
     
     func getNote(byIdentifier id : UUID)-> CDNote? {
         let fetchRequest  = NSFetchRequest<CDNote>(entityName: "CDNote")
+        let sortDescriptor  = NSSortDescriptor(key: "noteCreationDate", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
         let predicate = NSPredicate(format: "@id==%@", id as CVarArg)
         fetchRequest.predicate = predicate
         do {

@@ -9,7 +9,7 @@ import UIKit
 
 class NotesDashBoardViewController: UIViewController {
 
-    //Private variables
+    //MARK: - Private variables
     private let notesDashboardViewModel = NotesDashboardViewModel()
     private var notesItems = [NoteInformation]()
     private var colorIndex = -1
@@ -32,6 +32,7 @@ class NotesDashBoardViewController: UIViewController {
     }()
     
     private func initialSetup() {
+        checkInternetStatus()
         registerListeners()
         setNavigationTitle()
         configureCollectionViewCell()
@@ -45,27 +46,25 @@ class NotesDashBoardViewController: UIViewController {
         self.rootView.notesCollectionView.register(NotesCollectionViewCell.self, forCellWithReuseIdentifier: NotesCollectionViewCell.cellIdentifier)
     }
     
-    private func registerListeners(){
-        ///receive  Notes Items
-        notesDashboardViewModel.noteItemsListener = { [weak self] items in
-            guard let self = self else {return}
-            self.populateNotesItems(with: items)
+    private func registerListeners() {
+        ///receive  Note Items
+        notesDashboardViewModel.noteItemsListener = { [weak self] noteItems in
+            self?.populateNotesItems(with: noteItems)
         }
-        ///Add New Note!
+        ///Add New Note
         rootView.newNoteActionListener =  { [weak self]  in
-            guard let self = self else {return}
-            self.navigateToNewNoteViewController()
+            self?.navigateToNewNoteViewController()
         }
     }
     
-    private func populateNotesItems(with items: [NoteInformation]){
+    private func populateNotesItems(with items: [NoteInformation]) {
         self.notesItems = items
         DispatchQueue.main.async {
             self.rootView.notesCollectionView.reloadData()
         }
     }
     
-    private func navigateToNewNoteViewController(){
+    private func navigateToNewNoteViewController() {
         let addNewNotesViewController = NewNoteViewController()
         addNewNotesViewController.newNoteListener = {  newNote in
             self.notesItems.append(newNote)
@@ -73,19 +72,18 @@ class NotesDashBoardViewController: UIViewController {
             DispatchQueue.main.async {
                 self.rootView.notesCollectionView.reloadData()
             }
-           
         }
         self.navigationController?.pushViewController(addNewNotesViewController, animated: true)
     }
 
-     private func setNavigationTitle(){
+     private func setNavigationTitle() {
          navigationController?.navigationBar.prefersLargeTitles = true
          navigationController?.navigationBar.isTranslucent = false
          navigationItem.title = navigationTitle
          setupNavBarAppearance()
     }
     
-    func setupNavBarAppearance(){
+    func setupNavBarAppearance() {
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor : UIColor.white]
@@ -93,6 +91,12 @@ class NotesDashBoardViewController: UIViewController {
         navBarAppearance.backgroundColor = AppThemeColor.themeBlackColor.value
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+    }
+    
+    func checkInternetStatus() {
+        if !InternetConnectivity.shared.isConnectionStable {
+            showAlert(with: UIConstant.noInternet, message: UIConstant.noInternetAlertMessage)
+        }
     }
 }
 
@@ -121,7 +125,7 @@ extension NotesDashBoardViewController : UICollectionViewDataSource {
 extension NotesDashBoardViewController : UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedNoteInfo = self.notesItems[indexPath.row]
-        let  detailedNoteViewController = DetailedNoteViewController(notesInfo: selectedNoteInfo)
+        let detailedNoteViewController = DetailedNoteViewController(notesInfo: selectedNoteInfo)
         self.navigationController?.pushViewController(detailedNoteViewController, animated: true)
     }
 }

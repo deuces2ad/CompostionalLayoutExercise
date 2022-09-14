@@ -28,6 +28,7 @@
 		D19BBCDD28D1EC30009037D4 /* ConvertObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19BBCDC28D1EC30009037D4 /* ConvertObjects.swift */; };
 		D19BBCE028D1FB81009037D4 /* CDNote+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19BBCDE28D1FB81009037D4 /* CDNote+CoreDataClass.swift */; };
 		D19BBCE128D1FB81009037D4 /* CDNote+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19BBCDF28D1FB81009037D4 /* CDNote+CoreDataProperties.swift */; };
+		D19BBCE328D20560009037D4 /* InternetConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19BBCE228D20560009037D4 /* InternetConnectivity.swift */; };
 		D1A0623428CB7D9300229512 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A0623328CB7D9300229512 /* AppDelegate.swift */; };
 		D1A0623628CB7D9300229512 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A0623528CB7D9300229512 /* SceneDelegate.swift */; };
 		D1A0623828CB7D9300229512 /* NotesDashBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A0623728CB7D9300229512 /* NotesDashBoardViewController.swift */; };
@@ -35,7 +36,6 @@
 		D1A0623D28CB7D9400229512 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D1A0623C28CB7D9400229512 /* Assets.xcassets */; };
 		D1A0624028CB7D9400229512 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1A0623E28CB7D9400229512 /* LaunchScreen.storyboard */; };
 		D1A0624D28CB993400229512 /* CompostionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A0624C28CB993400229512 /* CompostionalLayout.swift */; };
-		D1E055FA28CF384E0014E674 /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E055F928CF384E0014E674 /* AppInfo.swift */; };
 		D1E055FD28D043BA0014E674 /* PersistenceStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E055FC28D043BA0014E674 /* PersistenceStorage.swift */; };
 		D1E0560B28D0559D0014E674 /* NotePersistence.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D1E0560928D0559D0014E674 /* NotePersistence.xcdatamodeld */; };
 		D1E0561E28D058AE0014E674 /* NoteDataRespository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E0561D28D058AE0014E674 /* NoteDataRespository.swift */; };
@@ -65,6 +65,7 @@
 		D19BBCDC28D1EC30009037D4 /* ConvertObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertObjects.swift; sourceTree = "<group>"; };
 		D19BBCDE28D1FB81009037D4 /* CDNote+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDNote+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		D19BBCDF28D1FB81009037D4 /* CDNote+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDNote+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		D19BBCE228D20560009037D4 /* InternetConnectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetConnectivity.swift; sourceTree = "<group>"; };
 		D1A0623028CB7D9300229512 /* ComposinalLayoutExercise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ComposinalLayoutExercise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1A0623328CB7D9300229512 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1A0623528CB7D9300229512 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -74,7 +75,6 @@
 		D1A0623F28CB7D9400229512 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D1A0624128CB7D9400229512 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D1A0624C28CB993400229512 /* CompostionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompostionalLayout.swift; sourceTree = "<group>"; };
-		D1E055F928CF384E0014E674 /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		D1E055FC28D043BA0014E674 /* PersistenceStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceStorage.swift; sourceTree = "<group>"; };
 		D1E0560A28D0559D0014E674 /* NotePersistence.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NotePersistence.xcdatamodel; sourceTree = "<group>"; };
 		D1E0561D28D058AE0014E674 /* NoteDataRespository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDataRespository.swift; sourceTree = "<group>"; };
@@ -107,7 +107,6 @@
 				D15F21A828CDA8C900AB7B7C /* AppThemeColor.swift */,
 				D171181B28CF0A19005511CF /* AppFonts.swift */,
 				D171181D28CF12DB005511CF /* AppSFsymbols.swift */,
-				D1E055F928CF384E0014E674 /* AppInfo.swift */,
 			);
 			path = AppConfigration;
 			sourceTree = "<group>";
@@ -257,6 +256,7 @@
 				D171181F28CF1FCB005511CF /* ImagePicker */,
 				D1706F0C28CC476C003689DD /* CompostionalLayoutBuilder */,
 				D19BBCDC28D1EC30009037D4 /* ConvertObjects.swift */,
+				D19BBCE228D20560009037D4 /* InternetConnectivity.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -384,7 +384,6 @@
 				D1706F0E28CC4792003689DD /* LayoutBuilder.swift in Sources */,
 				D15F21B528CDB5D000AB7B7C /* DetailedNoteRootView.swift in Sources */,
 				D171182728CF2B01005511CF /* NewNoteValidation.swift in Sources */,
-				D1E055FA28CF384E0014E674 /* AppInfo.swift in Sources */,
 				D1706F1628CC4C43003689DD /* FetchNotesService.swift in Sources */,
 				D1706F1C28CC7F83003689DD /* NotesItemModel.swift in Sources */,
 				D19BBCE028D1FB81009037D4 /* CDNote+CoreDataClass.swift in Sources */,
@@ -399,6 +398,7 @@
 				D15F219F28CCD8A500AB7B7C /* NotesCollectionViewCell.swift in Sources */,
 				D15F21C228CE05D500AB7B7C /* NewNoteViewController.swift in Sources */,
 				D1E0562128D06F7E0014E674 /* NoteManager.swift in Sources */,
+				D19BBCE328D20560009037D4 /* InternetConnectivity.swift in Sources */,
 				D1A0623628CB7D9300229512 /* SceneDelegate.swift in Sources */,
 				D15F21A228CCDB0800AB7B7C /* UIVIew + NSLayoutConstraints.swift in Sources */,
 			);
