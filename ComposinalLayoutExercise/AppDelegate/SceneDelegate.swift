@@ -11,13 +11,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
      
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let controller = NotesDashBoardViewController()
         self.window = UIWindow(windowScene: windowScene)
         self.window?.rootViewController = UINavigationController(rootViewController: controller)
+        let path = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        print("path is",path)
         self.window?.makeKeyAndVisible()
         
     }

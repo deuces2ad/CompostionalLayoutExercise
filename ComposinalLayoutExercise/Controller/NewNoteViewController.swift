@@ -6,17 +6,15 @@
 //
 
 import UIKit
-import Combine
 
 class NewNoteViewController : UIViewController {
     
     //MARK: - Private Variables
-    private var cancellable = Set<AnyCancellable>()
     private var userSelectedNoteImage : UIImage?
-    private let addNewNoteViewModel = NoteViewModel()
+    private let addNewNoteViewModel = NewNoteViewModel()
     private let noteManager = NoteManager()
     
-    @Published var newNoteListener : NoteInformation?
+    var newNoteListener : ((NoteInformation)->Void)? = nil
 
     //MARK: - View Life cycle
     override func viewDidLoad() {
@@ -49,33 +47,24 @@ class NewNoteViewController : UIViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
+    //MARK: - Methods
     private func registerListeners() {
-        
         ///Button Listener
-        rootView.backButtonListener.sink { [weak self] _ in
+        rootView.backButtonListener = { [weak self] in
             self?.popViewController()
-        }.store(in: &cancellable)
+        }
         
         ///ImagePicker Button Listener
-        rootView.imagePickerListener.sink { [weak self] _ in
+        rootView.imagePickerListener = { [weak self] in
          self?.imagePicker.photoGalleryAccessRequest()
-        }.store(in: &cancellable)
+        }
         
         ///SaveNote Button Listener
-        rootView.saveNoteListener.sink { [weak self] _ in
+        rootView.saveNoteListener = { [weak self]  in
             guard let self = self else { return }
-            
             let newNoteInfo = self.toNoteInformation(with:self.userSelectedNoteImage)
-                
-                if  let errorMessage = self.addNewNoteViewModel.validateNote(with: newNoteInfo){
-                    self.showAlert(with: UIConstant.alertTitle, message: errorMessage)
-                }else {
-                    self.newNoteListener = newNoteInfo
-                    self.noteManager.createNote(note: newNoteInfo)
-                    self.popViewController()
-                }
-
-        }.store(in: &cancellable)
+            self.saveToLocalDataBase(for: newNoteInfo)
+        }
     }
     
     private func popViewController() {
@@ -83,19 +72,26 @@ class NewNoteViewController : UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    func toNoteInformation(with image : UIImage?) -> NoteInformation{
-        
+    private func toNoteInformation(with image : UIImage?) -> NoteInformation{
         let noteTitle = rootView.newNoteTitleTextView.text ?? AppConstant.EMPTY_STRING
         let noteDescription = rootView.newNoteDescriptionTextView.text ?? AppConstant.EMPTY_STRING
-        let noteImage = image?.pngData()
+        let noteImage = image?.jpegData(compressionQuality: 1.0)
         return NoteInformation(id: UUID(),
                                noteTitle: noteTitle,
-                               noteImage: noteImage,
-                               noteDescription: noteDescription,
-                               noteCreationDate: Date())
+                               noteImage: nil, noteDescription: noteDescription,
+                               noteCreationDate: Date(),
+                               noteImageData: noteImage)
     }
     
-   
+    private func saveToLocalDataBase(for note :NoteInformation) {
+        let result = addNewNoteViewModel.validateNote(with: note)
+        if result.success == true {
+            self.newNoteListener?(note)
+            self.popViewController()
+        }else{
+            self.showAlert(with: UIConstant.alertTitle, message: result.message ?? AppConstant.EMPTY_STRING)
+        }
+    }
 }
 //MARK: - ImagePicker Delegate Method
 extension NewNoteViewController : ImagePickerDelegate {
@@ -116,7 +112,6 @@ extension NewNoteViewController : ImagePickerDelegate {
 
 extension UIViewController {
     func showAlert(with title : String, message:String){
-        
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default){_ in
             self.dismiss(animated: true)

@@ -6,41 +6,53 @@
 //
 
 import Foundation
-import Combine
+ 
 
 
-class NoteService {
-     static var cancellable = Set<AnyCancellable>()
-    
-    static func getNotes<T:Decodable>(with type: T.Type) -> Future<[T], Error > {
-        return Future{ promise in
-            guard let request = ServiceEndPoint.getNotes else {
-                return promise(.failure(NetworkError.InvalidURL))
-            }
-            URLSession.shared.dataTaskPublisher(for: request)
-                .tryMap { (data,response) -> Data in
-                    guard let response = response as? HTTPURLResponse ,200...299 ~= response.statusCode else {
-                        throw NetworkError.InvalidURL
-                    }
-                    return data
-                }
-                .decode(type: [T].self, decoder: JSONDecoder())
-                .receive(on: RunLoop.main)
-                .sink(receiveCompletion: { (completion) in
-                    switch completion {
-                    case .finished:
-                        print("Note Fetched successfully!")
-                    case .failure(_):
-                        promise(.failure(NetworkError.InvalidURL))
-                    }
-                }, receiveValue: {promise(.success($0))})
-                .store(in: &cancellable)
-        }
-    }
-}
-
+//class NoteService
+//
 enum NetworkError : Error {
     case InvalidURL
+}
+
+enum HTTPMethod : String {
+    case GET = "GET"
+}
+
+class NoteService  {
+    
+    static func getNotes(completion: @escaping (Result<[NotesItemModel],Error>)-> Void) {
+        
+        guard let url = ServiceEndPoint.getNotes else {
+            return completion(.failure(NetworkError.InvalidURL))
+        }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = HTTPMethod.GET.rawValue
+        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            if let error = error {
+                return completion(.failure(error))
+            }
+            guard let response = response as? HTTPURLResponse ,200...299 ~= response.statusCode else {
+                return completion(.failure(NetworkError.InvalidURL))
+            }
+            if let data = data {
+                if let result = decodeData(with: data){
+                    completion(.success(result))
+                }
+            }
+        }.resume()
+    }
+    
+    static func decodeData(with data: Data) -> [NotesItemModel]? {
+        do {
+            let decoded = try JSONDecoder().decode([NotesItemModel].self, from: data)
+            return decoded
+        }
+        catch let error {
+            debugPrint(error.localizedDescription)
+        }
+        return nil
+    }
 }
 
 extension NetworkError : LocalizedError {

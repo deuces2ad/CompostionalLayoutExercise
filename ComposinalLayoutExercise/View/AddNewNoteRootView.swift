@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Combine
+ 
 
 class AddNewNoteRootView : UIView {
     
@@ -14,9 +14,9 @@ class AddNewNoteRootView : UIView {
     private let titleViewPlaceholderText = "Title..."
     private let descriptionPlaceholderText = "Type something..."
     //MARK: - Listeners
-    var imagePickerListener = PassthroughSubject<Void,Never>()
-    var saveNoteListener = PassthroughSubject<Void,Never>()
-    var backButtonListener = PassthroughSubject<Void,Never>()
+    var imagePickerListener :(()->Void)? = nil
+    var saveNoteListener    :(()->Void)? = nil
+    var backButtonListener  :(()->Void)? = nil
     
     var newNoteTextViewHeightAnchor = 70.0
     
@@ -88,15 +88,15 @@ class AddNewNoteRootView : UIView {
     
     //MARK: - Actions
     @objc func imagePickerAction(){
-        imagePickerListener.send()
+        self.imagePickerListener?()
     }
     
     @objc func saveNoteAction(){
-        saveNoteListener.send()
+        self.saveNoteListener?()
     }
     
     @objc func backAction(){
-        backButtonListener.send()
+        self.backButtonListener?()
     }
     
     //MARK: - Methods

@@ -5,7 +5,8 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="noteCreationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="noteDescription" optional="YES" attributeType="String"/>
-        <attribute name="noteImage" optional="YES" attributeType="Binary"/>
+        <attribute name="noteImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="noteImageUrl" optional="YES" attributeType="String"/>
         <attribute name="noteTitle" optional="YES" attributeType="String"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -14,6 +15,6 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="CDNote" positionX="-54" positionY="-9" width="128" height="119"/>
+        <element name="CDNote" positionX="-54" positionY="-9" width="128" height="134"/>
     </elements>
 </model>

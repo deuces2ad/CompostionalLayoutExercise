@@ -25,8 +25,9 @@ struct NoteInformationRepository : NoteRespository {
         let cdNote = CDNote(context: PersistenceStorage.shared.context)
         cdNote.noteTitle = note.noteTitle
         cdNote.noteDescription = note.noteDescription
-        cdNote.noteImage = note.noteImage
-        
+        cdNote.noteImage = note.noteImageData
+        cdNote.noteImageUrl = note.noteImage
+        cdNote.noteCreationDate = note.noteCreationDate
         PersistenceStorage.shared.saveContext()
     }
     
@@ -51,7 +52,7 @@ struct NoteInformationRepository : NoteRespository {
          
         cdNote?.noteTitle = note.noteTitle
         cdNote?.noteDescription = note.noteDescription
-        cdNote?.noteImage = note.noteImage
+        cdNote?.noteImage = note.noteImageData
         PersistenceStorage.shared.saveContext()
         return true
     }

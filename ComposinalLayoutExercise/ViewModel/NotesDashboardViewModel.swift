@@ -5,47 +5,53 @@
 //  Created by Abhishek Dhiman on 10/09/22.
 //
 
-import Combine
+ 
 import Foundation
 
 class NotesDashboardViewModel {
     
     //MARK: - Properties
-    private var cancelable = Set<AnyCancellable>()
-    @Published var listener = [NotesItemModel]()
+    var noteItemsListener : (([NoteInformation])-> Void)? = nil
     
-    // get Notes from API service
+    //MARK: - Methods
+    func checkIfNotesPreFetchedFromAPI() -> Bool{
+        if let result = UserDefaults.standard.value(forKey: AppConstant.isNotesFetchedAlreadyFromAPI) as? Bool{
+            return result
+        }else{
+            return false
+        }
+    }
+    
     func getNotesItems() {
-        NoteService.getNotes(with: NotesItemModel.self)
-            .sink { completion in
-                switch completion {
-                case .failure(let err):
-                    print("Error is \(err.localizedDescription)")
-                case .finished:
-                   break
-                }
+        if !checkIfNotesPreFetchedFromAPI(){
+            fetchNotesFromAPI()
+        }else{
+            loadItemsFromLocalDataBase()
+        }
+    }
+    
+    private func fetchNotesFromAPI(){
+        NoteService.getNotes { [weak self] result in
+            switch result {
+            case .success(let items):
+                let noteInformation_items  = ConvertObjects.fetch_all_NoteInformation(from: items)
+                self?.noteItemsListener?(noteInformation_items)
+                self?.saveNoteToLocalDataBase(for: noteInformation_items)
+                UserDefaults.standard.setValue(true, forKey: AppConstant.isNotesFetchedAlreadyFromAPI)
+                
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-    receiveValue: { [weak self] notesInfo in
-        guard let self = self else { return }
-        self.listener = notesInfo
-    }
-    .store(in: &cancelable)
+        }
     }
     
-    func createNewModelInfo(with item : NoteInformation) -> NotesItemModel {
-        return NotesItemModel(id: "1", archived: false, title: item.noteTitle, body: item.noteDescription, createdTime: Int((Date().timeIntervalSince1970)), image: "\(item.noteImage ?? Data())", expiryTime: nil)
+    func saveNoteToLocalDataBase(for items : [NoteInformation]){
+        _ =  items.map{NoteManager().createNote(note: $0)}
     }
     
-    func createNoteModelFromNotesInformation(with notes: [NoteInformation]) -> [NotesItemModel]{
-        return notes.map{self.createNewModelInfo(with: $0)}
+    private func loadItemsFromLocalDataBase(){
+        guard let items = NoteManager().fetchNote() else {return}
+        if items.count == 0 {fetchNotesFromAPI()}
+        self.noteItemsListener!(items)
     }
-    
-//    func createNoteInformation(with item : NotesItemModel) -> NoteInformation {
-//        return NoteInformation(id: UUID(), noteTitle: item., noteImage: <#T##Data?#>, noteDescription: <#T##String#>, noteCreationDate: <#T##Date#>)
-//    }
-//
-//    func toNoteInformation(for items: [NotesItemModel]) -> [NoteInformation]{
-//        return items.map{}
-//    }
-    
 }

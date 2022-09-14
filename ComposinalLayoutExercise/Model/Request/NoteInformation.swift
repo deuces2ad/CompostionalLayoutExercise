@@ -10,7 +10,8 @@ import UIKit
 struct  NoteInformation {
     let id : UUID
     let noteTitle : String
-    let noteImage : Data?
+    let noteImage : String?
     let noteDescription : String
     let noteCreationDate : Date
+    let noteImageData : Data?
 }

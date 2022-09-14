@@ -11,6 +11,7 @@ import Foundation
 struct AppConstant {
     static let EMPTY_STRING = ""
     static let appDateFormat = "MMM dd, yyyy"
+    static let isNotesFetchedAlreadyFromAPI = "isNotesFetchedAlreadyFromAPI"
 }
 
 struct ServiceEndPoint {

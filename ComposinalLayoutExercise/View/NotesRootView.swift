@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Combine
+ 
 
 class NotesRootView: UIView {
     
@@ -19,7 +19,7 @@ class NotesRootView: UIView {
     }
     
     //MARK: - Properties
-    var action = PassthroughSubject<Void,Never>()
+    var newNoteActionListener : (()-> Void)? = nil
     
     private lazy var createNewNoteButton : UIButton = {
         let button = UIButton(type: .system)
@@ -40,7 +40,7 @@ class NotesRootView: UIView {
     
     //MARK: - Actions
     @objc func didTapOnCreateButton() {
-        action.send()
+        newNoteActionListener?()
     }
     
     //MARK: - Methods

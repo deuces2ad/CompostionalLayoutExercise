@@ -81,26 +81,19 @@ class DetailedNoteRootView :UIView {
     }
     
     //TODO: ReVisit this image saving logic.
-    func fillInfo(with noteInfo : NotesItemModel) {
-        if let noteImage = noteInfo.image {
-            if let url = URL(string: noteImage){
-                self.noteHeaderImage.loadImageFrom(url: url)
-            }else{
-                if let noteDataImage = noteImage.data(using: .utf8) {
-                    let abcd = UIImage(data: noteDataImage)
-                    self.noteHeaderImage.image = abcd
-                }
-//                if let data = UI{
-//                    self.noteHeaderImage.image = UIImage(data: data)
-//                }
-            }
-        }else{
+    func fillInfo(with noteInfo : NoteInformation) {
+        if let noteImage = noteInfo.noteImageData {
+            self.noteHeaderImage.image = UIImage(data: noteImage)
+        }else if let imageUrl = noteInfo.noteImage{
+            let url = URL(string: imageUrl)!
+            self.noteHeaderImage.loadImageFrom(url: url)
+        } else {
             noteImageHeightAnchor = 0
             noteHeaderImage.layoutIfNeeded()
         }
-        self.noteTitle.text = noteInfo.title
-        self.noteCreatedDateLabel.text = DateParser.convertToFormatedDate(with: noteInfo.createdTime)
-        self.noteDescriptionTxtView.text = noteInfo.body
+        self.noteTitle.text = noteInfo.noteTitle
+        self.noteCreatedDateLabel.text = DateParser.convertToFormatedDate(with: Int(noteInfo.noteCreationDate.timeIntervalSince1970))
+        self.noteDescriptionTxtView.text = noteInfo.noteDescription
     }
 }
 

@@ -41,9 +41,9 @@ class NotesCollectionViewCell : UICollectionViewCell {
     }()
     
     //MARK: - Methods
-    func fillInfo(with info:NotesItemModel) {
-        self.titleLabel.text = info.title
-        let date = DateParser.convertToFormatedDate(with: info.createdTime)
+    func fillInfo(with info:NoteInformation) {
+        self.titleLabel.text = info.noteTitle
+        let date = DateParser.convertToFormatedDate(with: Int(info.noteCreationDate.timeIntervalSince1970))
         self.noteCreationDateLabel.text = date
     }
     

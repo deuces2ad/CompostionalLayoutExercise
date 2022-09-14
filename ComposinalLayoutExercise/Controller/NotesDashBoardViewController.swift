@@ -6,16 +6,14 @@
 //
 
 import UIKit
-import Combine
 
 class NotesDashBoardViewController: UIViewController {
 
     //Private variables
     private let notesDashboardViewModel = NotesDashboardViewModel()
-    private var notesItems = [NotesItemModel]()
+    private var notesItems = [NoteInformation]()
     private var colorIndex = -1
     private let navigationTitle = "Notes"
-    private var observers : [AnyCancellable] = []
     private var manager = NoteManager()
     
     //MARK: - LifeCycle methods
@@ -34,10 +32,10 @@ class NotesDashBoardViewController: UIViewController {
     }()
     
     private func initialSetup() {
-        updateNavBarAppearance()
+        registerListeners()
+        setNavigationTitle()
         configureCollectionViewCell()
         notesDashboardViewModel.getNotesItems()
-        registerListeners()
     }
 
     //MARK: - Methods
@@ -48,43 +46,51 @@ class NotesDashBoardViewController: UIViewController {
     }
     
     private func registerListeners(){
-    
-        notesDashboardViewModel.$listener
-            .receive(on: DispatchQueue.main)
-            .sink { items in
-                let offlineNotes = self.notesDashboardViewModel.createNoteModelFromNotesInformation(with: self.manager.fetchNote()!)
-                self.notesItems.append(contentsOf: offlineNotes)
-                self.notesItems.append(contentsOf: items)
-                self.rootView.notesCollectionView.reloadData()
-            }.store(in: &observers)
-        
-        ///Add new Note!
-        rootView.action.sink {[weak self] message in
+        ///receive  Notes Items
+        notesDashboardViewModel.noteItemsListener = { [weak self] items in
             guard let self = self else {return}
-            let addNewNotesViewController = NewNoteViewController()
-            addNewNotesViewController
-                .$newNoteListener
-//            TODO: Visit this later
-                .compactMap{$0}
-                .map{self.notesDashboardViewModel.createNewModelInfo(with: $0)}
-                .sink { item in
-                    self.notesItems.append(item)
-                    self.rootView.notesCollectionView.reloadData()
-                }.store(in: &self.observers)
-            self.navigationController?.pushViewController(addNewNotesViewController, animated: true)
+            self.populateNotesItems(with: items)
         }
-        .store(in: &observers)
+        ///Add New Note!
+        rootView.newNoteActionListener =  { [weak self]  in
+            guard let self = self else {return}
+            self.navigateToNewNoteViewController()
+        }
     }
     
-     private func updateNavBarAppearance(){
-        self.navigationItem.title = navigationTitle
+    private func populateNotesItems(with items: [NoteInformation]){
+        self.notesItems = items
+        DispatchQueue.main.async {
+            self.rootView.notesCollectionView.reloadData()
+        }
+    }
+    
+    private func navigateToNewNoteViewController(){
+        let addNewNotesViewController = NewNoteViewController()
+        addNewNotesViewController.newNoteListener = {  newNote in
+            self.notesItems.append(newNote)
+            self.manager.createNote(note: newNote)
+            DispatchQueue.main.async {
+                self.rootView.notesCollectionView.reloadData()
+            }
+           
+        }
+        self.navigationController?.pushViewController(addNewNotesViewController, animated: true)
+    }
+
+     private func setNavigationTitle(){
+         navigationController?.navigationBar.prefersLargeTitles = true
+         navigationController?.navigationBar.isTranslucent = false
+         navigationItem.title = navigationTitle
+         setupNavBarAppearance()
+    }
+    
+    func setupNavBarAppearance(){
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor : UIColor.white]
         navBarAppearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
-         navBarAppearance.backgroundColor = AppThemeColor.themeBlackColor.value
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.isTranslucent = false
+        navBarAppearance.backgroundColor = AppThemeColor.themeBlackColor.value
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     }
@@ -92,10 +98,10 @@ class NotesDashBoardViewController: UIViewController {
 
 extension NotesDashBoardViewController : UICollectionViewDataSource {
     
-     func numberOfSections(in collectionView: UICollectionView) -> Int {
-      1
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
     }
-     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         notesItems.count
     }
     
@@ -111,17 +117,16 @@ extension NotesDashBoardViewController : UICollectionViewDataSource {
         return UICollectionViewCell()
     }
 }
+
 extension NotesDashBoardViewController : UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedNoteInfo = self.notesItems[indexPath.row]
-        let  vc = DetailedNoteViewController(notesInfo: selectedNoteInfo)
-        self.navigationController?.pushViewController(vc, animated: true)
-        
+        let  detailedNoteViewController = DetailedNoteViewController(notesInfo: selectedNoteInfo)
+        self.navigationController?.pushViewController(detailedNoteViewController, animated: true)
     }
 }
 
 //MARK: - Data Format Helping Class
-
 class DateParser {
     
     static func convertToFormatedDate(with timeInterval:Int) -> String{
