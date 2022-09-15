@@ -6,7 +6,7 @@
         <attribute name="noteCreationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="noteDescription" optional="YES" attributeType="String"/>
         <attribute name="noteImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
-        <attribute name="noteImageUrl" optional="YES" attributeType="String"/>
+        <attribute name="noteImageUrl" optional="YES" attributeType="URI"/>
         <attribute name="noteTitle" optional="YES" attributeType="String"/>
         <uniquenessConstraints>
             <uniquenessConstraint>

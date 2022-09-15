@@ -14,7 +14,7 @@ class NewNoteViewController : UIViewController {
     private let addNewNoteViewModel = NewNoteViewModel()
     private let noteManager = NoteManager()
     
-    var newNoteListener : ((NoteInformation)->Void)? = nil
+    var newNoteListener : ((Note)->Void)? = nil
 
     //MARK: - View Life cycle
     override func viewDidLoad() {
@@ -73,19 +73,19 @@ class NewNoteViewController : UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    private func toNoteInformation(with image : UIImage?) -> NoteInformation{
+    private func toNoteInformation(with image : UIImage?) -> Note{
         let noteTitle = rootView.newNoteTitleTextView.text ?? AppConstant.EMPTY_STRING
         let noteDescription = rootView.newNoteDescriptionTextView.text ?? AppConstant.EMPTY_STRING
         let noteImage = image?.jpegData(compressionQuality: 1.0)
-        return NoteInformation(id: UUID(),
-                               noteTitle: noteTitle,
-                               noteImage: nil,
-                               noteDescription: noteDescription,
-                               noteCreationDate: Date(),
-                               noteImageData: noteImage)
+        return Note(id: UUID(),
+                               title: noteTitle,
+                               image: nil,
+                               description: noteDescription,
+                               creationDate: Date(),
+                               imageData: noteImage)
     }
     
-    private func saveToLocalDataBase(for note :NoteInformation) {
+    private func saveToLocalDataBase(for note :Note) {
         let result = addNewNoteViewModel.validateNote(with: note)
         if result.success == true {
             self.newNoteListener?(note)

@@ -2,7 +2,7 @@
 //  CDNote+CoreDataProperties.swift
 //  ComposinalLayoutExercise
 //
-//  Created by Abhishek Dhiman on 14/09/22.
+//  Created by Abhishek Dhiman on 15/09/22.
 //
 //
 
@@ -21,17 +21,18 @@ extension CDNote {
     @NSManaged public var noteCreationDate: Date?
     @NSManaged public var noteDescription: String?
     @NSManaged public var noteImage: Data?
+    @NSManaged public var noteImageUrl: URL?
     @NSManaged public var noteTitle: String?
-    @NSManaged public var noteImageUrl: String?
     
-    func convertToNote() -> NoteInformation {
-        return NoteInformation(id: UUID(),
-                               noteTitle: self.noteTitle ?? AppConstant.EMPTY_STRING,
-                               noteImage: self.noteImageUrl,
-                               noteDescription: self.noteDescription ?? AppConstant.EMPTY_STRING,
-                               noteCreationDate: noteCreationDate ?? Date(),
-                               noteImageData: noteImage)
+    func convertToNote() -> Note {
+        return Note(id: UUID(),
+                               title: self.noteTitle ?? AppConstant.EMPTY_STRING,
+                               image: self.noteImageUrl,
+                               description: self.noteDescription ?? AppConstant.EMPTY_STRING,
+                               creationDate: noteCreationDate ?? Date(),
+                               imageData: noteImage)
     }
+
 }
 
 extension CDNote : Identifiable {

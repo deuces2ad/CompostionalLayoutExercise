@@ -12,23 +12,23 @@ struct NoteManager {
     
     private let noteInformationRepository = NoteInformationRepository()
     
-    func createNote(note : NoteInformation) {
+    func createNote(note : Note) {
         noteInformationRepository.create(note: note)
     }
     
-    func fetchNote() -> [NoteInformation]? {
+    func fetchNote() -> [Note]? {
        return  noteInformationRepository.getAll()
     }
     
-    func fetchNoteById(byIdentifier id: UUID) -> NoteInformation? {
+    func fetchNoteById(byIdentifier id: UUID) -> Note? {
         return noteInformationRepository.get(byIdentifier: id)
     }
     
-    func updateNote(note: NoteInformation) -> Bool {
+    func updateNote(note: Note) -> Bool {
         return noteInformationRepository.update(note: note)
     }
     
-    func deleteNote(note: NoteInformation) -> Bool {
+    func deleteNote(note: Note) -> Bool {
         return noteInformationRepository.delete(record: note)
     }
 }

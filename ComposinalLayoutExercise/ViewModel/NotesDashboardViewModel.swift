@@ -5,16 +5,15 @@
 //  Created by Abhishek Dhiman on 10/09/22.
 //
 
- 
 import Foundation
 
 class NotesDashboardViewModel {
     
-    //MARK: - Properties
-    var noteItemsListener : (([NoteInformation])-> Void)? = nil
+    typealias Action = (([Note]?) -> Void)
+    private let noteManager = NoteManager()
     
     //MARK: - Methods
-    func checkIfNotesPreFetchedFromAPI() -> Bool{
+    func isNotesSynced() -> Bool {
         if let result = UserDefaults.standard.value(forKey: AppConstant.isNotesFetchedAlreadyFromAPI) as? Bool {
             return result
         }else{
@@ -22,22 +21,21 @@ class NotesDashboardViewModel {
         }
     }
     
-    func getNotesItems() {
-        if !checkIfNotesPreFetchedFromAPI() {
-            fetchNotesFromAPI()
-        }else{
-            loadItemsFromLocalDataBase()
-        }
+    func getNotes(completion: @escaping Action) {
+        isNotesSynced() ?
+        loadItemsFromLocalDataBase(completion: completion) :
+        fetchNotesFromAPI(completion: completion)
     }
     
-    private func fetchNotesFromAPI() {
+    //MARK: - Private Methods
+    private func fetchNotesFromAPI(completion: @escaping Action) {
         NoteService.getNotes { [weak self] result in
             switch result {
             case .success(let items):
-                guard let self = self else {return}
-                let noteInformation_items  = ConvertObjects.fetch_all_NoteInformation(from: items)
-                self.noteItemsListener?(noteInformation_items)
-                self.saveNoteToLocalDataBase(for: noteInformation_items)
+                guard let self = self else { return }
+                let notes = ConvertObjects.fetch_all_NoteInformation(from: items)
+                self.createNotes(for: notes)
+                completion(notes)
                 UserDefaults.standard.setValue(true, forKey: AppConstant.isNotesFetchedAlreadyFromAPI)
             case .failure(let error):
                 print(error.localizedDescription)
@@ -45,13 +43,11 @@ class NotesDashboardViewModel {
         }
     }
     
-    func saveNoteToLocalDataBase(for items : [NoteInformation]) {
-        _ =  items.map{ NoteManager().createNote(note: $0) }
+    private func createNotes(for items : [Note]) {
+        _ =  items.map{ noteManager.createNote(note: $0) }
     }
     
-    private func loadItemsFromLocalDataBase() {
-        guard let items = NoteManager().fetchNote() else {return}
-        if items.count == 0 {fetchNotesFromAPI()}
-        self.noteItemsListener!(items)
+    private func loadItemsFromLocalDataBase(completion: Action) {
+        completion(noteManager.fetchNote())
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 
 class NewNoteViewModel {
         
-    func validateNote(with info : NoteInformation) -> NewNoteValidationResult {
+    func validateNote(with info : Note) -> NewNoteValidationResult {
         return NewNoteValidation().validateNewNoteInfo(with: info)
     }
 }

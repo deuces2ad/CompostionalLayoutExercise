@@ -10,11 +10,11 @@ import Foundation
 
 struct NewNoteValidation {
     
-    func validateNewNoteInfo(with info:NoteInformation) -> NewNoteValidationResult {
-        if info.noteTitle.isEmpty {
+    func validateNewNoteInfo(with info:Note) -> NewNoteValidationResult {
+        if info.title.isEmpty {
             return NewNoteValidationResult(success: false, message: "Note Title can't be left empty.")
         }
-        if info.noteDescription.isEmpty {
+        if info.description.isEmpty {
             return NewNoteValidationResult(success: false, message: "Note Description can't be left empty.")
         }
         return NewNoteValidationResult(success: true, message: nil)

@@ -21,7 +21,7 @@ enum HTTPMethod : String {
 
 class NoteService  {
     
-    static func getNotes(completion: @escaping (Result<[NotesItemModel],Error>)-> Void) {
+    static func getNotes(completion: @escaping (Result<[NoteResponseModel],Error>)-> Void) {
         
         guard let url = ServiceEndPoint.getNotes else {
             return completion(.failure(NetworkError.InvalidURL))
@@ -43,13 +43,13 @@ class NoteService  {
         }.resume()
     }
     
-    static func decodeData(with data: Data) -> [NotesItemModel]? {
+    static func decodeData(with data: Data) -> [NoteResponseModel]? {
         do {
-            let decoded = try JSONDecoder().decode([NotesItemModel].self, from: data)
+            let decoded = try JSONDecoder().decode([NoteResponseModel].self, from: data)
             return decoded
         }
         catch let error {
-            debugPrint(error.localizedDescription)
+            debugPrint(error)
         }
         return nil
     }

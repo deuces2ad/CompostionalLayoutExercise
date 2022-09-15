@@ -11,52 +11,52 @@ import CoreData
 
 protocol NoteRespository {
     
-    func create(note: NoteInformation)
-    func getAll() -> [NoteInformation]?
-    func get(byIdentifier id : UUID) -> NoteInformation?
-    func update(note: NoteInformation) -> Bool
-    func delete(record: NoteInformation) -> Bool
+    func create(note: Note)
+    func getAll() -> [Note]?
+    func get(byIdentifier id : UUID) -> Note?
+    func update(note: Note) -> Bool
+    func delete(record: Note) -> Bool
 }
 
 struct NoteInformationRepository : NoteRespository {
     
-    func create(note: NoteInformation) {
+    func create(note: Note) {
         let cdNote = CDNote(context: PersistenceStorage.shared.context)
-        cdNote.noteTitle = note.noteTitle
-        cdNote.noteDescription = note.noteDescription
-        cdNote.noteImage = note.noteImageData
-        cdNote.noteImageUrl = note.noteImage
-        cdNote.noteCreationDate = note.noteCreationDate
+        cdNote.noteTitle = note.title
+        cdNote.noteDescription = note.description
+        cdNote.noteImage = note.imageData
+        cdNote.noteImageUrl = note.image
+        cdNote.noteCreationDate = note.creationDate
         PersistenceStorage.shared.saveContext()
     }
     
-    func getAll() -> [NoteInformation]? {
+    func getAll() -> [Note]? {
         let result = PersistenceStorage.shared.fetchManagedObject(managedObject: CDNote.self)
-        var notes : [NoteInformation] = []
+        var notes : [Note] = []
         result?.forEach({ cdNote in
             notes.append(cdNote.convertToNote())
         })
         return notes
     }
     
-    func get(byIdentifier id: UUID) -> NoteInformation? {
+    func get(byIdentifier id: UUID) -> Note? {
         let result = getNote(byIdentifier: id)
         guard result != nil else {return nil}
         return result?.convertToNote()
     }
     
-    func update(note: NoteInformation) -> Bool {
+    func update(note: Note) -> Bool {
         let cdNote = getNote(byIdentifier: note.id)
         guard cdNote != nil else {return false}
          
-        cdNote?.noteTitle = note.noteTitle
-        cdNote?.noteDescription = note.noteDescription
-        cdNote?.noteImage = note.noteImageData
+        cdNote?.noteTitle = note.title
+        cdNote?.noteDescription = note.description
+        cdNote?.noteImage = note.imageData
         PersistenceStorage.shared.saveContext()
         return true
     }
     
-    func delete(record: NoteInformation) -> Bool {
+    func delete(record: Note) -> Bool {
         let cdNote = getNote(byIdentifier: record.id)
         guard cdNote != nil else {return false}
         PersistenceStorage.shared.context.delete(cdNote!)

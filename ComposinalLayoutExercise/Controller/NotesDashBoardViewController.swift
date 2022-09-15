@@ -11,33 +11,29 @@ class NotesDashBoardViewController: UIViewController {
 
     //MARK: - Private variables
     private let notesDashboardViewModel = NotesDashboardViewModel()
-    private let navigationTitle = "Notes"
     private let cardBackgroundCount = ApplicationColor.cardBackgrounds.count
-    private var colorIndex = -1
-    private var notesItems = [NoteInformation]()
-    private var manager = NoteManager()
+    private let manager = NoteManager()
+    private let rootView: NotesRootView = NotesRootView()
+    private var colorIndex = UIConstant.firstColorIndex
+    private var notesItems = [Note]()
    
     //MARK: - LifeCycle methods
     override func loadView() {
         super.loadView()
         view = rootView
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initialSetup()
     }
-    
-    lazy var rootView : NotesRootView = {
-        let rootView = NotesRootView()
-        return rootView
-    }()
     
     private func initialSetup() {
         checkInternetStatus()
         registerListeners()
         setNavigationTitle()
         configureCollectionViewCell()
-        notesDashboardViewModel.getNotesItems()
+        
     }
 
     //MARK: - Methods
@@ -49,8 +45,8 @@ class NotesDashBoardViewController: UIViewController {
     
     private func registerListeners() {
         ///receive  Note Items
-        notesDashboardViewModel.noteItemsListener = { [weak self] noteItems in
-            self?.populateNotesItems(with: noteItems)
+        notesDashboardViewModel.getNotes { [weak self] notes in
+            self?.populateNotesItems(with: notes!)
         }
         ///Add New Note
         rootView.newNoteActionListener =  { [weak self]  in
@@ -58,7 +54,7 @@ class NotesDashBoardViewController: UIViewController {
         }
     }
     
-    private func populateNotesItems(with items: [NoteInformation]) {
+    private func populateNotesItems(with items: [Note]) {
         self.notesItems = items
         DispatchQueue.main.async {
             self.rootView.notesCollectionView.reloadData()
@@ -80,7 +76,7 @@ class NotesDashBoardViewController: UIViewController {
      private func setNavigationTitle() {
          navigationController?.navigationBar.prefersLargeTitles = true
          navigationController?.navigationBar.isTranslucent = false
-         navigationItem.title = navigationTitle
+         navigationItem.title = UIConstant.navigationTitle
          setupNavBarAppearance()
     }
     

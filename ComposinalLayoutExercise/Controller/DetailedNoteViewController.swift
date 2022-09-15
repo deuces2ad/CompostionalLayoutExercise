@@ -10,7 +10,7 @@ import UIKit
 class DetailedNoteViewController : UIViewController {
     
     //MARK: - Private Variables
-    private var noteInfo : NoteInformation
+    private var noteInfo : Note
     
     //MARK: - Life Cycle Methods
     override func loadView() {
@@ -24,7 +24,7 @@ class DetailedNoteViewController : UIViewController {
     }
     
     //MARK: - Initialiser Method
-    init(notesInfo: NoteInformation) {
+    init(notesInfo: Note) {
         self.noteInfo = notesInfo
         super.init(nibName: nil, bundle: nil)
     }
