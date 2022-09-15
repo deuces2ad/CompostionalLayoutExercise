@@ -21,10 +21,10 @@
 			</array>
 		</dict>
 	</dict>
-    <key>NSCameraUsageDescription</key>
-    <string>Notes app would like access camera</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Notes app would like access gallery</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Notes app would like to access camera</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Notes app would like to access gallery</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

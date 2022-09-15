@@ -9,11 +9,19 @@ import Foundation
 
 class NotesDashboardViewModel {
     
-    typealias Action = (([Note]?) -> Void)
     private let noteManager = NoteManager()
     
     //MARK: - Methods
-    func isNotesSynced() -> Bool {
+   
+    func getNotes(completion: @escaping (([Note]?) -> Void)) {
+        isNotesFetchedAlreadyFromAPI() ?
+        getNotesFromStorage(completion: completion) :
+        getNotesFromService(completion: completion)
+    }
+    
+    //MARK: - Private Methods
+    
+    private func isNotesFetchedAlreadyFromAPI() -> Bool {
         if let result = UserDefaults.standard.value(forKey: AppConstant.isNotesFetchedAlreadyFromAPI) as? Bool {
             return result
         }else{
@@ -21,15 +29,8 @@ class NotesDashboardViewModel {
         }
     }
     
-    func getNotes(completion: @escaping Action) {
-        isNotesSynced() ?
-        loadItemsFromLocalDataBase(completion: completion) :
-        fetchNotesFromAPI(completion: completion)
-    }
-    
-    //MARK: - Private Methods
-    private func fetchNotesFromAPI(completion: @escaping Action) {
-        NoteService.getNotes { [weak self] result in
+    private func getNotesFromService(completion: @escaping (([Note]?) -> Void)) {
+        NoteService().getNotes { [weak self] result in
             switch result {
             case .success(let items):
                 guard let self = self else { return }
@@ -44,10 +45,12 @@ class NotesDashboardViewModel {
     }
     
     private func createNotes(for items : [Note]) {
-        _ =  items.map{ noteManager.createNote(note: $0) }
+        for item in items {
+            noteManager.createNote(note: item)
+        }
     }
     
-    private func loadItemsFromLocalDataBase(completion: Action) {
+    private func getNotesFromStorage(completion: (([Note]?) -> Void)) {
         completion(noteManager.fetchNote())
     }
 }

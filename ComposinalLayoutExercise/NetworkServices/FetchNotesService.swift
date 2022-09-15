@@ -7,10 +7,6 @@
 
 import Foundation
  
-
-
-//class NoteService
-//
 enum NetworkError : Error {
     case InvalidURL
 }
@@ -21,7 +17,7 @@ enum HTTPMethod : String {
 
 class NoteService  {
     
-    static func getNotes(completion: @escaping (Result<[NoteResponseModel],Error>)-> Void) {
+     func getNotes(completion: @escaping (Result<[NoteResponseModel],Error>)-> Void) {
         
         guard let url = ServiceEndPoint.getNotes else {
             return completion(.failure(NetworkError.InvalidURL))
@@ -36,14 +32,14 @@ class NoteService  {
                 return completion(.failure(NetworkError.InvalidURL))
             }
             if let data = data {
-                if let result = decodeData(with: data){
+                if let result = self.decodeData(with: data){
                     completion(.success(result))
                 }
             }
         }.resume()
     }
     
-    static func decodeData(with data: Data) -> [NoteResponseModel]? {
+     func decodeData(with data: Data) -> [NoteResponseModel]? {
         do {
             let decoded = try JSONDecoder().decode([NoteResponseModel].self, from: data)
             return decoded
