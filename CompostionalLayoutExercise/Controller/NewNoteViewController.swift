@@ -1,6 +1,6 @@
 //
 //  AddNewNoteViewController.swift
-//  ComposinalLayoutExercise
+//  CompositionalLayoutExercise
 //
 //  Created by Abhishek Dhiman on 11/09/22.
 //
@@ -12,8 +12,7 @@ class NewNoteViewController : UIViewController {
     //MARK: - Private Variables
     private var userSelectedNoteImage : UIImage?
     private let addNewNoteViewModel = NewNoteViewModel()
-    private let noteManager = NoteManager()
-    
+
     var newNoteListener : ((Note)->Void)? = nil
 
     //MARK: - View Life cycle

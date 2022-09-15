@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  ComposinalLayoutExercise
+//  CompositionalLayoutExercise
 //
 //  Created by Abhishek Dhiman on 09/09/22.
 //
@@ -8,15 +8,14 @@
 import UIKit
 
 class NotesDashBoardViewController: UIViewController {
-
+    
     //MARK: - Private variables
-    private let notesDashboardViewModel = NotesDashboardViewModel()
+    private let dashboardViewModel = DashboardViewModel() // TODO: Use factory
     private let cardBackgroundCount = ApplicationColor.cardBackgrounds.count
-    private let manager = NoteManager()
     private let rootView: NotesRootView = NotesRootView()
     private var colorIndex = UIConstant.firstColorIndex
     private var notesItems = [Note]()
-   
+    
     //MARK: - LifeCycle methods
     override func loadView() {
         super.loadView()
@@ -35,7 +34,7 @@ class NotesDashBoardViewController: UIViewController {
         configureCollectionViewCell()
         
     }
-
+    
     //MARK: - Methods
     private func configureCollectionViewCell() {
         self.rootView.notesCollectionView.delegate = self
@@ -44,11 +43,11 @@ class NotesDashBoardViewController: UIViewController {
     }
     
     private func registerListeners() {
-        ///receive  Note Items
-        notesDashboardViewModel.getNotes { [weak self] notes in
+        //receive  Note Items
+        dashboardViewModel.getNotes { [weak self] notes in
             self?.populateNotesItems(with: notes!)
         }
-        ///Add New Note
+        //Add New Note
         rootView.newNoteActionListener =  { [weak self]  in
             self?.navigateToNewNoteViewController()
         }
@@ -65,19 +64,23 @@ class NotesDashBoardViewController: UIViewController {
         let addNewNotesViewController = NewNoteViewController()
         addNewNotesViewController.newNoteListener = {  newNote in
             self.notesItems.append(newNote)
-            self.manager.createNote(note: newNote)
-            DispatchQueue.main.async {
-                self.rootView.notesCollectionView.reloadData()
+            let result = self.dashboardViewModel.saveNote(note: newNote)
+            if(result) {
+                DispatchQueue.main.async {
+                    self.rootView.notesCollectionView.reloadData()
+                }
+            }else {
+                //TODO: SHOW ALERT
             }
         }
         self.navigationController?.pushViewController(addNewNotesViewController, animated: true)
     }
-
-     private func setNavigationTitle() {
-         navigationController?.navigationBar.prefersLargeTitles = true
-         navigationController?.navigationBar.isTranslucent = false
-         navigationItem.title = UIConstant.navigationTitle
-         setupNavBarAppearance()
+    
+    private func setNavigationTitle() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.isTranslucent = false
+        navigationItem.title = UIConstant.navigationTitle
+        setupNavBarAppearance()
     }
     
     func setupNavBarAppearance() {

@@ -28,15 +28,19 @@ final class PersistenceStorage {
     lazy var context = persistenceContainer.viewContext
     
     //MARK: - Saves changes
-    func saveContext() {
+    @discardableResult
+    func saveContext() -> Bool {
         if context.hasChanges {
             do {
                 try context.save()
+                return true
             } catch {
                 let error = error as NSError
                 print("Error",error.userInfo)
+                return false
             }
         }
+        return false
     }
     
     func fetchManagedObject<T:NSManagedObject>(managedObject: T.Type) -> [T]? {

@@ -1,6 +1,6 @@
 //
 //  NewNoteValidation.swift
-//  ComposinalLayoutExercise
+//  CompositionalLayoutExercise
 //
 //  Created by Abhishek Dhiman on 12/09/22.
 //

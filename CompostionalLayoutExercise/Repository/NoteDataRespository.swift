@@ -1,6 +1,6 @@
 //
-//  NoteDataRespository.swift
-//  ComposinalLayoutExercise
+//  NoteDataRepository.swift
+//  CompositionalLayoutExercise
 //
 //  Created by Abhishek Dhiman on 13/09/22.
 //
@@ -8,26 +8,40 @@
 import Foundation
 import CoreData
 
-
-protocol NoteRespository {
-    
-    func create(note: Note)
+protocol NoteRepository: AnyObject {
+    func save(note: Note) -> Bool
+    func saveNotes(notes: Array<Note>) -> Bool
     func getAll() -> [Note]?
     func get(byIdentifier id : UUID) -> Note?
-    func update(note: Note) -> Bool
-    func delete(record: Note) -> Bool
 }
 
-struct NoteInformationRepository : NoteRespository {
+class NoteDataRepository: NoteRepository {
     
-    func create(note: Note) {
+    func save(note: Note) -> Bool {
         let cdNote = CDNote(context: PersistenceStorage.shared.context)
+        cdNote.id = note.id
         cdNote.noteTitle = note.title
         cdNote.noteDescription = note.description
         cdNote.noteImage = note.imageData
         cdNote.noteImageUrl = note.image
         cdNote.noteCreationDate = note.creationDate
-        PersistenceStorage.shared.saveContext()
+        
+        return PersistenceStorage.shared.saveContext()
+    }
+    
+    func saveNotes(notes: Array<Note>) -> Bool {
+        
+        for note in notes {
+            let cdNote = CDNote(context: PersistenceStorage.shared.context)
+            cdNote.id = note.id
+            cdNote.noteTitle = note.title
+            cdNote.noteDescription = note.description
+            cdNote.noteImage = note.imageData
+            cdNote.noteImageUrl = note.image
+            cdNote.noteCreationDate = note.creationDate
+        }
+        
+        return PersistenceStorage.shared.saveContext()
     }
     
     func getAll() -> [Note]? {
@@ -45,24 +59,6 @@ struct NoteInformationRepository : NoteRespository {
         return result?.convertToNote()
     }
     
-    func update(note: Note) -> Bool {
-        let cdNote = getNote(byIdentifier: note.id)
-        guard cdNote != nil else {return false}
-         
-        cdNote?.noteTitle = note.title
-        cdNote?.noteDescription = note.description
-        cdNote?.noteImage = note.imageData
-        PersistenceStorage.shared.saveContext()
-        return true
-    }
-    
-    func delete(record: Note) -> Bool {
-        let cdNote = getNote(byIdentifier: record.id)
-        guard cdNote != nil else {return false}
-        PersistenceStorage.shared.context.delete(cdNote!)
-        return true 
-    }
-    
     func getNote(byIdentifier id : UUID)-> CDNote? {
         let fetchRequest  = NSFetchRequest<CDNote>(entityName: "CDNote")
         let sortDescriptor  = NSSortDescriptor(key: "noteCreationDate", ascending: false)
@@ -78,5 +74,4 @@ struct NoteInformationRepository : NoteRespository {
         }
         return nil
     }
-    
 }
