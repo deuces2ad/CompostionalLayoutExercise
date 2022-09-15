@@ -11,11 +11,12 @@ class NotesDashBoardViewController: UIViewController {
 
     //MARK: - Private variables
     private let notesDashboardViewModel = NotesDashboardViewModel()
-    private var notesItems = [NoteInformation]()
-    private var colorIndex = -1
     private let navigationTitle = "Notes"
+    private let cardBackgroundCount = ApplicationColor.cardBackgrounds.count
+    private var colorIndex = -1
+    private var notesItems = [NoteInformation]()
     private var manager = NoteManager()
-    
+   
     //MARK: - LifeCycle methods
     override func loadView() {
         super.loadView()
@@ -88,7 +89,7 @@ class NotesDashBoardViewController: UIViewController {
         navBarAppearance.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor : UIColor.white]
         navBarAppearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
-        navBarAppearance.backgroundColor = AppThemeColor.themeBlackColor.value
+        navBarAppearance.backgroundColor = ApplicationColor.darkBackground
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     }
@@ -114,8 +115,8 @@ extension NotesDashBoardViewController : UICollectionViewDataSource {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NotesCollectionViewCell.cellIdentifier, for: indexPath) as? NotesCollectionViewCell{
             cell.fillInfo(with: notesItems[indexPath.row])
             cell.layer.cornerRadius = 8
-            self.colorIndex += colorIndex < (AppThemeColor.notesBackgroundColors().count - 1)  ? 1 : -(AppThemeColor.notesBackgroundColors().count - 1)
-            cell.backgroundColor = AppThemeColor.notesBackgroundColors()[colorIndex]
+            self.colorIndex += colorIndex < (cardBackgroundCount - 1)  ? 1 : -(cardBackgroundCount - 1)
+            cell.backgroundColor = ApplicationColor.cardBackgrounds[colorIndex]
             return cell
         }
         return UICollectionViewCell()

@@ -10,7 +10,7 @@
 		D15F219F28CCD8A500AB7B7C /* NotesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15F219E28CCD8A500AB7B7C /* NotesCollectionViewCell.swift */; };
 		D15F21A228CCDB0800AB7B7C /* UIVIew + NSLayoutConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15F21A128CCDB0800AB7B7C /* UIVIew + NSLayoutConstraints.swift */; };
 		D15F21A428CD76FF00AB7B7C /* NotesRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15F21A328CD76FF00AB7B7C /* NotesRootView.swift */; };
-		D15F21A928CDA8C900AB7B7C /* AppThemeColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15F21A828CDA8C900AB7B7C /* AppThemeColor.swift */; };
+		D15F21A928CDA8C900AB7B7C /* CardBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15F21A828CDA8C900AB7B7C /* CardBackground.swift */; };
 		D15F21AF28CDB3EB00AB7B7C /* DetailedNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15F21AE28CDB3EB00AB7B7C /* DetailedNoteViewController.swift */; };
 		D15F21B528CDB5D000AB7B7C /* DetailedNoteRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15F21B428CDB5D000AB7B7C /* DetailedNoteRootView.swift */; };
 		D15F21BB28CDD09000AB7B7C /* NoteInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15F21BA28CDD09000AB7B7C /* NoteInformation.swift */; };
@@ -47,7 +47,7 @@
 		D15F219E28CCD8A500AB7B7C /* NotesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCollectionViewCell.swift; sourceTree = "<group>"; };
 		D15F21A128CCDB0800AB7B7C /* UIVIew + NSLayoutConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIew + NSLayoutConstraints.swift"; sourceTree = "<group>"; };
 		D15F21A328CD76FF00AB7B7C /* NotesRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesRootView.swift; sourceTree = "<group>"; };
-		D15F21A828CDA8C900AB7B7C /* AppThemeColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppThemeColor.swift; sourceTree = "<group>"; };
+		D15F21A828CDA8C900AB7B7C /* CardBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBackground.swift; sourceTree = "<group>"; };
 		D15F21AE28CDB3EB00AB7B7C /* DetailedNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedNoteViewController.swift; sourceTree = "<group>"; };
 		D15F21B428CDB5D000AB7B7C /* DetailedNoteRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedNoteRootView.swift; sourceTree = "<group>"; };
 		D15F21BA28CDD09000AB7B7C /* NoteInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteInformation.swift; sourceTree = "<group>"; };
@@ -104,7 +104,7 @@
 		D15F21A728CDA85800AB7B7C /* AppConfigration */ = {
 			isa = PBXGroup;
 			children = (
-				D15F21A828CDA8C900AB7B7C /* AppThemeColor.swift */,
+				D15F21A828CDA8C900AB7B7C /* CardBackground.swift */,
 				D171181B28CF0A19005511CF /* AppFonts.swift */,
 				D171181D28CF12DB005511CF /* AppSFsymbols.swift */,
 			);
@@ -233,7 +233,6 @@
 				D15F21CA28CE067400AB7B7C /* ViewModel */,
 				D15F21CB28CE067900AB7B7C /* Controller */,
 				D171182528CF2AC7005511CF /* Validation */,
-				D1E055FB28D0439B0014E674 /* CoreDataSupportFiles */,
 				D1E0561C28D058580014E674 /* Repository */,
 				D1E0561F28D06F5D0014E674 /* Managers */,
 				D15F21A728CDA85800AB7B7C /* AppConfigration */,
@@ -274,6 +273,7 @@
 		D1E0561C28D058580014E674 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				D1E055FB28D0439B0014E674 /* CoreDataSupportFiles */,
 				D1E0561D28D058AE0014E674 /* NoteDataRespository.swift */,
 			);
 			path = Repository;
@@ -373,7 +373,7 @@
 				D171181E28CF12DB005511CF /* AppSFsymbols.swift in Sources */,
 				D15F21AF28CDB3EB00AB7B7C /* DetailedNoteViewController.swift in Sources */,
 				D171182128CF1FD5005511CF /* ImagePicker.swift in Sources */,
-				D15F21A928CDA8C900AB7B7C /* AppThemeColor.swift in Sources */,
+				D15F21A928CDA8C900AB7B7C /* CardBackground.swift in Sources */,
 				D171181C28CF0A19005511CF /* AppFonts.swift in Sources */,
 				D19BBCE128D1FB81009037D4 /* CDNote+CoreDataProperties.swift in Sources */,
 				D1E055FD28D043BA0014E674 /* PersistenceStorage.swift in Sources */,

@@ -29,7 +29,7 @@ class AddNewNoteRootView : UIView {
    
     lazy var newNoteTitleTextView :CustomTextView = {
         let textView = CustomTextView()
-        textView.backgroundColor = AppThemeColor.themeBlackColor.value
+        textView.backgroundColor = ApplicationColor.darkBackground
         textView.textColor = .white.withAlphaComponent(0.8)
         textView.font = AppFont.noteTitleFont
         textView.placeholderText = titleViewPlaceholderText
@@ -38,7 +38,7 @@ class AddNewNoteRootView : UIView {
     
     lazy var newNoteDescriptionTextView :CustomTextView = {
         let textView = CustomTextView()
-        textView.backgroundColor = AppThemeColor.themeBlackColor.value
+        textView.backgroundColor = ApplicationColor.darkBackground
         textView.textColor = .white.withAlphaComponent(0.6)
         textView.font = AppFont.noteDescriptionFont
         textView.placeholderText = descriptionPlaceholderText
@@ -50,7 +50,7 @@ class AddNewNoteRootView : UIView {
         button.setImage(UIImage(systemName: AppSfSymbols.paperclip.rawValue), for: .normal)
         button.addTarget(self, action: #selector(imagePickerAction), for: .touchUpInside)
         button.tintColor = .white
-        button.backgroundColor = AppThemeColor.buttonShadowColor.value
+        button.backgroundColor = ApplicationColor.buttonShadow
         button.layer.cornerRadius = 12
         button.heightAnchor.constraint(equalToConstant: 40).isActive = true
         button.widthAnchor.constraint(equalToConstant: 40).isActive = true

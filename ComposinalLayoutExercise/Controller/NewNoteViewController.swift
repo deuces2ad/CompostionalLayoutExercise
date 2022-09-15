@@ -31,7 +31,7 @@ class NewNoteViewController : UIViewController {
    //MARK: - Properties
     private lazy var rootView : AddNewNoteRootView = {
         let rootView = AddNewNoteRootView()
-        rootView.backgroundColor = AppThemeColor.themeBlackColor.value
+        rootView.backgroundColor = ApplicationColor.darkBackground
         return rootView
     }()
     

@@ -27,14 +27,14 @@ class NotesRootView: UIView {
         button.setTitleColor(.white, for: .normal)
         button.setTitle("+", for: .normal)
         button.layer.cornerRadius = 35
-        button.backgroundColor = AppThemeColor.themeBlackColor.value
+        button.backgroundColor = ApplicationColor.darkBackground
         button.addTarget(self, action: #selector(didTapOnCreateButton), for: .touchUpInside)
         return button
     }()
     
     lazy var notesCollectionView : UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: LayoutBuilder.createCompositionalLayout())
-        collectionView.backgroundColor = AppThemeColor.themeBlackColor.value
+        collectionView.backgroundColor = ApplicationColor.darkBackground
         return collectionView
     }()
     
