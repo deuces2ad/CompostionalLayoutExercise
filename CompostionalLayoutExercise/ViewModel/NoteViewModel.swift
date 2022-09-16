@@ -7,37 +7,35 @@
 
 import Foundation
 
-protocol DashboardViewModelProtocol : AnyObject {
+protocol NoteViewModelProtocol: AnyObject {
     func getNotes(completion: @escaping ((Array<Note>?) -> Void))
-    func saveNote(note: Note) -> Bool
+    func saveNote(note: Note) -> (Bool,String?)
 }
 
-class DashboardViewModel: DashboardViewModelProtocol {
+class NoteViewModel: NoteViewModelProtocol {
     
     private let noteManager: NoteDataAccessorProtocol? = DataAccessorFactory().createNoteDataAccessor()
     private let noteService: NoteServiceProtocol? = ServiceFactory().createNoteService()
+    private let noteValidation: NoteValidation = NoteValidation()
     
     //MARK: - Methods
-    func getNotes(completion: @escaping (([Note]?) -> Void)) {
+    func getNotes(completion: @escaping ((Array<Note>?) -> Void)) {
         isNotesFetchedAlreadyFromAPI() ?
         getNotesFromStorage(completion: completion) :
         getNotesFromService(completion: completion)
     }
     
-    func saveNote(note: Note) -> Bool {
-        
-        /* let validationResult = noteValidation.validate(note)
-         if(validationResult.Success) {
-         // CREATE THE NOTE
-         } else {
-         // RETURN VALIDATION ERROR
-         }*/
-        return ((noteManager?.saveNote(note: note)) != nil)
+    func saveNote(note: Note) -> (Bool,String?) {
+        let validationResult = noteValidation.validate(note: note)
+        if validationResult.success {
+            return (((noteManager?.saveNote(note: note)) != nil),nil)
+        }
+        return (validationResult.success,validationResult.errorMessage)
     }
     
     //MARK: - Private Methods
     private func isNotesFetchedAlreadyFromAPI() -> Bool {
-        return UserDefaults.standard.value(forKey: AppConstant.isNotesFetchedAlreadyFromAPI) as? Bool ?? false
+        return UserDefaults.standard.value(forKey: AppConstant.isNotesSynced) as? Bool ?? false
     }
     
     private func getNotesFromService(completion: @escaping (Array<Note>?) -> Void) {
@@ -58,8 +56,8 @@ class DashboardViewModel: DashboardViewModelProtocol {
     private func createNotes(with notesToSave: [Note]) {
         let result = ((noteManager?.saveNotes(notes: notesToSave)) != nil)
         result ?
-        UserDefaults.standard.setValue(true, forKey: AppConstant.isNotesFetchedAlreadyFromAPI) :
-        UserDefaults.standard.setValue(false, forKey: AppConstant.isNotesFetchedAlreadyFromAPI)
+        UserDefaults.standard.setValue(true, forKey: AppConstant.isNotesSynced) :
+        UserDefaults.standard.setValue(false, forKey: AppConstant.isNotesSynced)
     }
     
     private func getNotesFromStorage(completion: (([Note]?) -> Void)) {

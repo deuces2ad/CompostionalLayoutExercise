@@ -7,22 +7,25 @@
 
 import Foundation
 
-//
 struct AppConstant {
-    static let EMPTY_STRING = ""
-    static let appDateFormat = "MMM dd, yyyy"
-    static let isNotesFetchedAlreadyFromAPI = "isNotesFetchedAlreadyFromAPI"
+    static let emptyString            = String()
+    static let appDateFormat          = "MMM dd, yyyy"
+    static let isNotesSynced          = "isNotesSynced"
+}
+
+struct ValidationConstant {
+    static let emptyTitle             = "Note Title cannot be left empty."
+    static let emptyDescription       = "Note Description cannot be left empty."
 }
 
 struct ServiceEndPoint {
-    static let getNotes = URL(string:"https://raw.githubusercontent.com/RishabhRaghunath/JustATest/master/notes")
+    static let getNotes               = URL(string:"https://raw.githubusercontent.com/RishabhRaghunath/JustATest/master/notes")
 }
 
 struct UIConstant {
-    static let alertTitle = "Daily Note"
+    static let alertTitle             = "Daily Note"
     static let noInternetAlertMessage = "No internet connectivity,please check your internet connection."
-    static let noInternet = "No network connection"
-    static let navigationTitle = "Notes"
-    static let firstColorIndex = 0
+    static let noInternet             = "No network connection"
+    static let navigationTitle        = "Notes"
+    static let firstColorIndex        = 0
 }
-

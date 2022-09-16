@@ -15,7 +15,10 @@ enum ErrorType {
     case InvalidURL
 }
 
-final class HttpUtility {
+protocol HttpUtilityProtocol {
+    func get(request: URLRequest,completion: @escaping (Result<Array<NoteResponseModel>,Error>)-> Void)
+}
+final class HttpUtility: HttpUtilityProtocol {
     
     static let shared = HttpUtility()
     

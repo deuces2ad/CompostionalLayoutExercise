@@ -8,7 +8,7 @@
 import XCTest
 @testable import CompostionalLayoutExercise
 
-final class NoteServiceTest: XCTestCase {
+class NoteServiceTest: XCTestCase {
 
     var noteService: NoteServiceProtocol?
     

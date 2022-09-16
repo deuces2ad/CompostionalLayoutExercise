@@ -8,31 +8,24 @@
 import XCTest
 @testable import CompostionalLayoutExercise
 
-final class HttpUtilityTest: XCTestCase {
+class HttpUtilityTest: XCTestCase {
     
-    var httpUtility: HttpUtility?
-    
-    override  func setUp() {
-        super.setUp()
-        httpUtility = HttpUtility.shared
-    }
-    
-    func test_HttpUtility_With_ValidRequest_Returns_Success() {
+    func test_Get_WithValidRequest_Returns_NoteResponseModelCollection() {
         
         // ARRANGE
-        let url = URL(string:"https://raw.githubusercontent.com/RishabhRaghunath/JustATest/master/notes")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        let expectation = expectation(description: "ValidRequest_Returns_Success")
+        let request = createURLRequest()
+        let httpUtility = HttpUtility.shared
+        let expectation = expectation(description: "NoteResponseModelCollection")
         
         // ACT
-        httpUtility?.get(request: request, completion: { response in
+        httpUtility.get(request: request, completion: { response in
             
             switch response {
             case .success(let noteCollection):
                 // ASSERT
                 XCTAssertNotNil(response)
                 XCTAssertNotNil(noteCollection)
+                XCTAssertFalse(noteCollection.isEmpty)
                 XCTAssertEqual(noteCollection.first?.title, "How to grow your online presence")
                 expectation.fulfill()
             case .failure(let error):
@@ -40,29 +33,37 @@ final class HttpUtilityTest: XCTestCase {
                 expectation.fulfill()
             }
         })
-        waitForExpectations(timeout: 5)
+        waitForExpectations(timeout: 3)
     }
     
-    func test_HttpUtility_With_InValidRequest_Returns_Failure() {
-        
-        // ARRANGE
-        let url = URL(string:"https://raw.githubusercontent.com/RishabhRaghunath/JustATest/master/note")!
+    //TODO: Need to check up...
+//    func test_HttpUtility_With_InValidRequest_Returns_Failure() {
+//
+//        // ARRANGE
+//        let invalidUrl = URL(string: "https://httpbin.org/get")!
+//        let request = createURLRequest(url: invalidUrl)
+//        let httpUtility = HttpUtility.shared
+//        let expectation = expectation(description: "ValidRequest_Returns_Success")
+//
+//        // ACT
+//        httpUtility.get(request: request, completion: { response in
+//
+//            switch response {
+//            case .success(let response):
+//                XCTAssertNil(response)
+//            case .failure(let error):
+//                // ASSERT
+//                XCTAssertNotNil(error)
+//                expectation.fulfill()
+//            }
+//        })
+//        waitForExpectations(timeout: 10)
+//    }
+    
+    //MARK: - Create URL Request
+    private func createURLRequest(url: URL = ServiceEndPoint.getNotes!) -> URLRequest {
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        let expectation = expectation(description: "ValidRequest_Returns_Success")
-        
-        // ACT
-        httpUtility?.get(request: request, completion: { response in
-            
-            switch response {
-            case .success(let response):
-                XCTAssertNil(response)
-            case .failure(let error):
-                // ASSERT
-                XCTAssertNotNil(error)
-                expectation.fulfill()
-            }
-        })
-        waitForExpectations(timeout: 5)
+        request.httpMethod = HTTPMethod.GET.rawValue
+        return request
     }
 }

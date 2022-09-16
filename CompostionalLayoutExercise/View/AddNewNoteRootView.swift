@@ -126,7 +126,7 @@ class AddNewNoteRootView : UIView {
 //MARK: - Custom TextView Helper Class
 final class CustomTextView : UITextView, UITextViewDelegate {
     
-    var placeholderText = AppConstant.EMPTY_STRING
+    var placeholderText = AppConstant.emptyString
     
     override func layoutSubviews() {
         super.layoutSubviews()

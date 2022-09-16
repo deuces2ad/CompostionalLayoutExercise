@@ -10,7 +10,7 @@ import UIKit
 class NotesDashBoardViewController: UIViewController {
     
     //MARK: - Private variables
-    private let dashboardViewModel = DashboardViewModel() // TODO: Use factory
+    private let dashboardViewModel = NoteViewModel() // TODO: Use factory
     private let cardBackgroundCount = ApplicationColor.cardBackgrounds.count
     private let rootView: NotesRootView = NotesRootView()
     private var colorIndex = UIConstant.firstColorIndex
@@ -63,14 +63,17 @@ class NotesDashBoardViewController: UIViewController {
     private func navigateToNewNoteViewController() {
         let addNewNotesViewController = NewNoteViewController()
         addNewNotesViewController.newNoteListener = {  newNote in
-            self.notesItems.append(newNote)
             let result = self.dashboardViewModel.saveNote(note: newNote)
-            if(result) {
+            //TODO: Fix tuple type
+            let saveResult = result.0
+            if(saveResult) {
+                self.notesItems.append(newNote)
                 DispatchQueue.main.async {
                     self.rootView.notesCollectionView.reloadData()
                 }
             }else {
-                //TODO: SHOW ALERT
+                let errorMessage = result.1
+                self.showAlert(with: UIConstant.alertTitle, message: errorMessage ?? AppConstant.emptyString)
             }
         }
         self.navigationController?.pushViewController(addNewNotesViewController, animated: true)

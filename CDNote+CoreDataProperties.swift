@@ -26,9 +26,9 @@ extension CDNote {
     
     func convertToNote() -> Note {
         return Note(id: UUID(),
-                               title: self.noteTitle ?? AppConstant.EMPTY_STRING,
+                               title: self.noteTitle ?? AppConstant.emptyString,
                                image: self.noteImageUrl,
-                               description: self.noteDescription ?? AppConstant.EMPTY_STRING,
+                               description: self.noteDescription ?? AppConstant.emptyString,
                                creationDate: noteCreationDate ?? Date(),
                                imageData: noteImage)
     }

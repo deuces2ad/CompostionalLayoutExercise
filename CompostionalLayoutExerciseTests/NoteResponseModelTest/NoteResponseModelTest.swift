@@ -8,7 +8,7 @@
 import XCTest
 @testable import CompostionalLayoutExercise
 
-final class NoteResponseModelTest: XCTestCase {
+class NoteResponseModelTest: XCTestCase {
     
     func test_NoteResponseModel_With_ValidJSON_Return_Success () {
         // ARRANGE
