@@ -8,46 +8,68 @@
 import Foundation
 import CoreData
 
+enum StorageType {
+    case inMemory
+    case persisted
+}
+
 final class PersistenceStorage {
-    
-    private init(){}
     static let shared = PersistenceStorage()
     
-    //MARK: - Load Persistence
-    lazy var persistenceContainer : NSPersistentContainer =  {
-        
-        let container = NSPersistentContainer(name: "NotePersistence")
-        container.loadPersistentStores { (storeDescription, error) in
-            if let error = error as NSError? {
-                print("Unable to load persistence container")
-            }
+    private let coreDateModelFileName = "NotePersistence"
+    var persistentContainer: NSPersistentContainer
+    
+    static var managedObjectModel: NSManagedObjectModel = {
+        let bundle = Bundle(for: PersistenceStorage.self)
+        guard let url = bundle.url(forResource: "NotePersistence", withExtension: ".momd") else {
+            fatalError("Failed to locate momd file")
         }
-        return container
+        guard let model = NSManagedObjectModel(contentsOf: url) else {
+            fatalError("Failed to locate momd file")
+        }
+        return model
     }()
     
-    lazy var context = persistenceContainer.viewContext
-    
-    //MARK: - Saves changes
-    func saveContext() {
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let error = error as NSError
-                print("Error",error.userInfo)
+    init(storageType: StorageType = .persisted) {
+        persistentContainer = NSPersistentContainer(name: coreDateModelFileName, managedObjectModel: Self.managedObjectModel)
+        
+        if storageType == .inMemory {
+            let description = NSPersistentStoreDescription()
+            persistentContainer.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+            persistentContainer.persistentStoreDescriptions = [description]
+            description.type = NSInMemoryStoreType
+        }
+        
+        persistentContainer.loadPersistentStores { description, error in
+            if let error = error {
+                fatalError("Core Data failed to load with \(error)")
             }
         }
+    }
+    
+    // MARK: - Core Data Saving support
+    @discardableResult
+    func saveContext() -> Bool {
+        if persistentContainer.viewContext.hasChanges {
+            do {
+                try persistentContainer.viewContext.save()
+                return true
+            } catch {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
+        return false
     }
     
     func fetchManagedObject<T:NSManagedObject>(managedObject: T.Type) -> [T]? {
         do {
             guard let result = try
-                    PersistenceStorage.shared.context.fetch(managedObject.fetchRequest()) as? [T] else {return nil}
+                    PersistenceStorage.shared.persistentContainer.viewContext.fetch(managedObject.fetchRequest()) as? [T] else {return nil}
             return result
         } catch let error{
             print(error.localizedDescription)
         }
         return nil
     }
-    
 }

@@ -26,7 +26,8 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -42,7 +43,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D1433C1128D32D3D00316A5F"
+               BlueprintIdentifier = "D1A98F6528D33EF800ECD861"
                BuildableName = "CompostionalLayoutExerciseTests.xctest"
                BlueprintName = "CompostionalLayoutExerciseTests"
                ReferencedContainer = "container:CompostionalLayoutExercise.xcodeproj">

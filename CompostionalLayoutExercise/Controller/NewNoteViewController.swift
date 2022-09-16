@@ -1,6 +1,6 @@
 //
 //  AddNewNoteViewController.swift
-//  ComposinalLayoutExercise
+//  CompositionalLayoutExercise
 //
 //  Created by Abhishek Dhiman on 11/09/22.
 //
@@ -11,9 +11,8 @@ class NewNoteViewController : UIViewController {
     
     //MARK: - Private Variables
     private var userSelectedNoteImage : UIImage?
-    private let addNewNoteViewModel = NewNoteViewModel()
-    private let noteManager = NoteManager()
-    
+
+
     var newNoteListener : ((Note)->Void)? = nil
 
     //MARK: - View Life cycle
@@ -74,8 +73,8 @@ class NewNoteViewController : UIViewController {
     }
     
     private func toNoteInformation(with image : UIImage?) -> Note{
-        let noteTitle = rootView.newNoteTitleTextView.text ?? AppConstant.EMPTY_STRING
-        let noteDescription = rootView.newNoteDescriptionTextView.text ?? AppConstant.EMPTY_STRING
+        let noteTitle = rootView.newNoteTitleTextView.text ?? AppConstant.emptyString
+        let noteDescription = rootView.newNoteDescriptionTextView.text ?? AppConstant.emptyString
         let noteImage = image?.jpegData(compressionQuality: 1.0)
         return Note(id: UUID(),
                                title: noteTitle,
@@ -86,15 +85,11 @@ class NewNoteViewController : UIViewController {
     }
     
     private func saveToLocalDataBase(for note :Note) {
-        let result = addNewNoteViewModel.validateNote(with: note)
-        if result.success == true {
-            self.newNoteListener?(note)
-            self.popViewController()
-        }else{
-            self.showAlert(with: UIConstant.alertTitle, message: result.message ?? AppConstant.EMPTY_STRING)
-        }
+        self.newNoteListener?(note)
+        self.popViewController()
     }
 }
+
 //MARK: - ImagePicker Delegate Method
 extension NewNoteViewController : ImagePickerDelegate {
     
