@@ -11,6 +11,10 @@ enum HTTPMethod : String {
     case GET = "GET"
 }
 
+enum ErrorType {
+    case InvalidURL
+}
+
 final class HttpUtility {
     
     static let shared = HttpUtility()
@@ -20,12 +24,11 @@ final class HttpUtility {
     func get(request: URLRequest,completion: @escaping (Result<Array<NoteResponseModel>,Error>)-> Void) {
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                return completion(.failure(error))
+            if let _ = error {
+                return completion(.failure(ErrorType.InvalidURL))
             }
             guard let response = response as? HTTPURLResponse ,200...299 ~= response.statusCode else {
-                //TODO: Fix this..:)
-                return completion(.failure(error!))
+                return completion(.failure(ErrorType.InvalidURL))
             }
             if let data = data {
                 if let result = self.decodeData(with: data){
@@ -44,5 +47,15 @@ final class HttpUtility {
             debugPrint(error)
         }
         return nil
+    }
+}
+
+extension ErrorType : LocalizedError {
+    
+    var message : String {
+        switch self {
+        case .InvalidURL:
+            return NSLocalizedString("InValid Url", comment: "InValid Url")
+        }
     }
 }

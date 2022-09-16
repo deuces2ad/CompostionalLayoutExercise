@@ -7,8 +7,8 @@
 
 import Foundation
 
-class RepositoryFactory {
-    static func createNoteDataRepository() -> NoteRepository {
-        return NoteDataRepository()
-    }
-}
+//class RepositoryFactory {
+//    static func createNoteDataRepository() -> NoteRepository {
+//        return NoteDataRepository()
+//    }
+//}

@@ -18,7 +18,7 @@ protocol NoteRepository: AnyObject {
 class NoteDataRepository: NoteRepository {
     
     func save(note: Note) -> Bool {
-        let cdNote = CDNote(context: PersistenceStorage.shared.context)
+        let cdNote = CDNote(context: PersistenceStorage.shared.persistentContainer.viewContext)
         cdNote.id = note.id
         cdNote.noteTitle = note.title
         cdNote.noteDescription = note.description
@@ -32,7 +32,7 @@ class NoteDataRepository: NoteRepository {
     func saveNotes(notes: Array<Note>) -> Bool {
         
         for note in notes {
-            let cdNote = CDNote(context: PersistenceStorage.shared.context)
+            let cdNote = CDNote(context: PersistenceStorage.shared.persistentContainer.viewContext)
             cdNote.id = note.id
             cdNote.noteTitle = note.title
             cdNote.noteDescription = note.description
@@ -66,7 +66,7 @@ class NoteDataRepository: NoteRepository {
         let predicate = NSPredicate(format: "@id==%@", id as CVarArg)
         fetchRequest.predicate = predicate
         do {
-            let result = try PersistenceStorage.shared.context.fetch(fetchRequest).first
+            let result = try PersistenceStorage.shared.persistentContainer.viewContext.fetch(fetchRequest).first
             guard result != nil else  {return nil}
             return result
         } catch let error {

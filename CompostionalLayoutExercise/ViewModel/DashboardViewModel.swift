@@ -25,6 +25,7 @@ class DashboardViewModel: DashboardViewModelProtocol {
     }
     
     func saveNote(note: Note) -> Bool {
+        
         /* let validationResult = noteValidation.validate(note)
          if(validationResult.Success) {
          // CREATE THE NOTE

@@ -7,7 +7,6 @@
 
 import UIKit
  
-
 class NotesRootView: UIView {
     
     //MARK: - View life cycle
