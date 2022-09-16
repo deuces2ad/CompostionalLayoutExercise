@@ -64,16 +64,13 @@ class NotesDashBoardViewController: UIViewController {
         let addNewNotesViewController = NewNoteViewController()
         addNewNotesViewController.newNoteListener = {  newNote in
             let result = self.dashboardViewModel.saveNote(note: newNote)
-            //TODO: Fix tuple type
-            let saveResult = result.0
-            if(saveResult) {
+            if(result.isSaved) {
                 self.notesItems.append(newNote)
                 DispatchQueue.main.async {
                     self.rootView.notesCollectionView.reloadData()
                 }
             }else {
-                let errorMessage = result.1
-                self.showAlert(with: UIConstant.alertTitle, message: errorMessage ?? AppConstant.emptyString)
+                self.showAlert(with: UIConstant.alertTitle, message: result.errorMessage ?? AppConstant.emptyString)
             }
         }
         self.navigationController?.pushViewController(addNewNotesViewController, animated: true)

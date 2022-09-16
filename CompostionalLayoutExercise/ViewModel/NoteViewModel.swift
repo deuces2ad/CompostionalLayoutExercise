@@ -9,7 +9,7 @@ import Foundation
 
 protocol NoteViewModelProtocol: AnyObject {
     func getNotes(completion: @escaping ((Array<Note>?) -> Void))
-    func saveNote(note: Note) -> (Bool,String?)
+    func saveNote(note: Note) -> SavingNoteResult
 }
 
 class NoteViewModel: NoteViewModelProtocol {
@@ -25,12 +25,12 @@ class NoteViewModel: NoteViewModelProtocol {
         getNotesFromService(completion: completion)
     }
     
-    func saveNote(note: Note) -> (Bool,String?) {
+    func saveNote(note: Note) -> SavingNoteResult {
         let validationResult = noteValidation.validate(note: note)
         if validationResult.success {
-            return (((noteManager?.saveNote(note: note)) != nil),nil)
+            return SavingNoteResult(isSaved: noteManager?.saveNote(note: note) ?? false, errorMessage: nil)
         }
-        return (validationResult.success,validationResult.errorMessage)
+        return SavingNoteResult(isSaved: validationResult.success, errorMessage: validationResult.errorMessage)
     }
     
     //MARK: - Private Methods
@@ -63,4 +63,10 @@ class NoteViewModel: NoteViewModelProtocol {
     private func getNotesFromStorage(completion: (([Note]?) -> Void)) {
         completion(noteManager?.fetchNote())
     }
+}
+
+//TODO: Need to check this name
+struct SavingNoteResult {
+    let isSaved: Bool
+    let errorMessage: String?
 }

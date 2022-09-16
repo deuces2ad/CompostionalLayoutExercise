@@ -32,8 +32,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "51"
             endingLineNumber = "51"
-            landmarkName = "test_Get_Note_By_Id_Returns_Success()"
-            landmarkType = "7">
+            landmarkName = "NoteRepositoryTest"
+            landmarkType = "3">
             <Locations>
                <Location
                   uuid = "397FCCA9-18EA-4E81-9AFE-C4970537851C - bf21558eb7648d9"
