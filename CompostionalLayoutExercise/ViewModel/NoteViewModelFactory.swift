@@ -8,7 +8,7 @@
 import Foundation
 
 class NoteViewModelFactory {
-    static func createNoteViewModelFactory() -> NoteViewModelProtocol {
+    static func createNoteViewModel() -> NoteViewModelProtocol {
         return NoteViewModel()
     }
 }

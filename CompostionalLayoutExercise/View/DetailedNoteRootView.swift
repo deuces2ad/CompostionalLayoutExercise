@@ -24,7 +24,7 @@ class DetailedNoteRootView :UIView {
         return scrollView
     }()
     
-    private lazy var noteHeaderImage : UIImageView = {
+     lazy var noteHeaderImage : UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
@@ -32,7 +32,7 @@ class DetailedNoteRootView :UIView {
         return imageView
     }()
     
-    private lazy var noteTitle : UILabel = {
+     lazy var noteTitle : UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = AppFont.noteTitleFont
@@ -41,14 +41,14 @@ class DetailedNoteRootView :UIView {
         return label
     }()
     
-    private lazy var noteCreatedDateLabel : UILabel = {
+     lazy var noteCreatedDateLabel : UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 16, weight: .light)
         return label
     }()
     
-    private lazy var noteDescriptionTxtView : UILabel = {
+     lazy var noteDescriptionTxtView : UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = .white

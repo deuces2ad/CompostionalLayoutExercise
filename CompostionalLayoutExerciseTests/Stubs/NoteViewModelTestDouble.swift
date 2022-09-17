@@ -77,11 +77,11 @@ class NoteViewModelTestDouble: NoteViewModelProtocol {
         return stubNotesFromStorage()
     }
     
-    private func stubNotesFromService() -> [Note] {
+    func stubNotesFromService() -> [Note] {
         return  [Note(id: UUID(), title: "test title", image: nil, description: "test description", creationDate: Date(), imageData: nil)]
     }
     
-    private func stubNotesFromStorage() -> [Note] {
+    func stubNotesFromStorage() -> [Note] {
         return  [Note(id: UUID(), title: "test title", image: nil, description: "test description", creationDate: Date(), imageData: nil),
                  Note(id: UUID(), title: "Another test title ", image: nil, description: "Another test description", creationDate: Date(), imageData: nil)]
     }

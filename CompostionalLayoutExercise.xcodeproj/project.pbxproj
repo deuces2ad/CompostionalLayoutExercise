@@ -14,6 +14,13 @@
 		D149793F28D570280022778C /* NoteValidationStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149793E28D570280022778C /* NoteValidationStub.swift */; };
 		D149794128D571020022778C /* CDNoteExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149794028D571020022778C /* CDNoteExtension.swift */; };
 		D149794328D58D730022778C /* NoteViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149794228D58D730022778C /* NoteViewModelFactory.swift */; };
+		D149794628D58EB30022778C /* NotesCollectionViewCellTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149794528D58EB30022778C /* NotesCollectionViewCellTest.swift */; };
+		D149794928D58FF20022778C /* AddNewNoteRootViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149794828D58FF20022778C /* AddNewNoteRootViewTest.swift */; };
+		D149794C28D595220022778C /* DetailedNoteRootViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149794B28D595220022778C /* DetailedNoteRootViewTest.swift */; };
+		D149795128D598740022778C /* NewNoteViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149795028D598740022778C /* NewNoteViewControllerTest.swift */; };
+		D149795328D59D0F0022778C /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149795228D59D0F0022778C /* UIViewController + Extension.swift */; };
+		D149795628D59D710022778C /* DetailedNoteViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149795528D59D710022778C /* DetailedNoteViewControllerTest.swift */; };
+		D149795928D59FFB0022778C /* NotesDashBoardViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149795828D59FFB0022778C /* NotesDashBoardViewControllerTest.swift */; };
 		D15F219F28CCD8A500AB7B7C /* NotesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15F219E28CCD8A500AB7B7C /* NotesCollectionViewCell.swift */; };
 		D15F21A228CCDB0800AB7B7C /* UIVIew + NSLayoutConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15F21A128CCDB0800AB7B7C /* UIVIew + NSLayoutConstraints.swift */; };
 		D15F21A428CD76FF00AB7B7C /* NotesRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15F21A328CD76FF00AB7B7C /* NotesRootView.swift */; };
@@ -80,6 +87,13 @@
 		D149793E28D570280022778C /* NoteValidationStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteValidationStub.swift; sourceTree = "<group>"; };
 		D149794028D571020022778C /* CDNoteExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDNoteExtension.swift; sourceTree = "<group>"; };
 		D149794228D58D730022778C /* NoteViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModelFactory.swift; sourceTree = "<group>"; };
+		D149794528D58EB30022778C /* NotesCollectionViewCellTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCollectionViewCellTest.swift; sourceTree = "<group>"; };
+		D149794828D58FF20022778C /* AddNewNoteRootViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewNoteRootViewTest.swift; sourceTree = "<group>"; };
+		D149794B28D595220022778C /* DetailedNoteRootViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedNoteRootViewTest.swift; sourceTree = "<group>"; };
+		D149795028D598740022778C /* NewNoteViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteViewControllerTest.swift; sourceTree = "<group>"; };
+		D149795228D59D0F0022778C /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
+		D149795528D59D710022778C /* DetailedNoteViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedNoteViewControllerTest.swift; sourceTree = "<group>"; };
+		D149795828D59FFB0022778C /* NotesDashBoardViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesDashBoardViewControllerTest.swift; sourceTree = "<group>"; };
 		D15F219E28CCD8A500AB7B7C /* NotesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCollectionViewCell.swift; sourceTree = "<group>"; };
 		D15F21A128CCDB0800AB7B7C /* UIVIew + NSLayoutConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIew + NSLayoutConstraints.swift"; sourceTree = "<group>"; };
 		D15F21A328CD76FF00AB7B7C /* NotesRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesRootView.swift; sourceTree = "<group>"; };
@@ -157,6 +171,54 @@
 				D149793E28D570280022778C /* NoteValidationStub.swift */,
 			);
 			path = Stubs;
+			sourceTree = "<group>";
+		};
+		D149794428D58E940022778C /* NotesCollectionViewCellTest */ = {
+			isa = PBXGroup;
+			children = (
+				D149794528D58EB30022778C /* NotesCollectionViewCellTest.swift */,
+			);
+			path = NotesCollectionViewCellTest;
+			sourceTree = "<group>";
+		};
+		D149794728D58FE10022778C /* AddNewNoteRootViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				D149794828D58FF20022778C /* AddNewNoteRootViewTest.swift */,
+			);
+			path = AddNewNoteRootViewTest;
+			sourceTree = "<group>";
+		};
+		D149794A28D594DC0022778C /* DetailedNoteRootViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				D149794B28D595220022778C /* DetailedNoteRootViewTest.swift */,
+			);
+			path = DetailedNoteRootViewTest;
+			sourceTree = "<group>";
+		};
+		D149794D28D597B40022778C /* NewNoteViewControllerTest */ = {
+			isa = PBXGroup;
+			children = (
+				D149795028D598740022778C /* NewNoteViewControllerTest.swift */,
+			);
+			path = NewNoteViewControllerTest;
+			sourceTree = "<group>";
+		};
+		D149795428D59D500022778C /* DetailedNoteViewControllerTest */ = {
+			isa = PBXGroup;
+			children = (
+				D149795528D59D710022778C /* DetailedNoteViewControllerTest.swift */,
+			);
+			path = DetailedNoteViewControllerTest;
+			sourceTree = "<group>";
+		};
+		D149795728D59FF00022778C /* NotesDashBoardViewControllerTest */ = {
+			isa = PBXGroup;
+			children = (
+				D149795828D59FFB0022778C /* NotesDashBoardViewControllerTest.swift */,
+			);
+			path = NotesDashBoardViewControllerTest;
 			sourceTree = "<group>";
 		};
 		D15F219D28CCD85600AB7B7C /* cells */ = {
@@ -327,6 +389,7 @@
 				D171181F28CF1FCB005511CF /* ImagePicker */,
 				D1706F0C28CC476C003689DD /* CompostionalLayoutBuilder */,
 				D19BBCE228D20560009037D4 /* InternetConnectivity.swift */,
+				D149795228D59D0F0022778C /* UIViewController + Extension.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -378,6 +441,12 @@
 		D1A98F6728D33EF800ECD861 /* CompostionalLayoutExerciseTests */ = {
 			isa = PBXGroup;
 			children = (
+				D149795728D59FF00022778C /* NotesDashBoardViewControllerTest */,
+				D149795428D59D500022778C /* DetailedNoteViewControllerTest */,
+				D149794D28D597B40022778C /* NewNoteViewControllerTest */,
+				D149794A28D594DC0022778C /* DetailedNoteRootViewTest */,
+				D149794728D58FE10022778C /* AddNewNoteRootViewTest */,
+				D149794428D58E940022778C /* NotesCollectionViewCellTest */,
 				D149793928D56FA70022778C /* Stubs */,
 				D1A53CB228D4918600871E8F /* NoteViewModelTest */,
 				D1A53CA828D47A9600871E8F /* NoteResponseModelTest */,
@@ -579,6 +648,7 @@
 				D19BBCE328D20560009037D4 /* InternetConnectivity.swift in Sources */,
 				D1A0623628CB7D9300229512 /* SceneDelegate.swift in Sources */,
 				D1A98F7228D350B800ECD861 /* RepositoryFactory.swift in Sources */,
+				D149795328D59D0F0022778C /* UIViewController + Extension.swift in Sources */,
 				D15F21A228CCDB0800AB7B7C /* UIVIew + NSLayoutConstraints.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -588,13 +658,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1A53CAA28D47ACB00871E8F /* NoteResponseModelTest.swift in Sources */,
+				D149795928D59FFB0022778C /* NotesDashBoardViewControllerTest.swift in Sources */,
+				D149795628D59D710022778C /* DetailedNoteViewControllerTest.swift in Sources */,
+				D149794628D58EB30022778C /* NotesCollectionViewCellTest.swift in Sources */,
+				D149794928D58FF20022778C /* AddNewNoteRootViewTest.swift in Sources */,
 				D1A53CB128D48E7900871E8F /* NoteServiceTest.swift in Sources */,
 				D1A53CC028D4D23700871E8F /* NoteViewModelTest.swift in Sources */,
 				D1A98F7028D344DB00ECD861 /* NoteValidationTest.swift in Sources */,
 				D1A53CBE28D4C95200871E8F /* HttpUtilitySpyTest.swift in Sources */,
 				D149793D28D570110022778C /* NoteDataAccessorValidStub.swift in Sources */,
+				D149794C28D595220022778C /* DetailedNoteRootViewTest.swift in Sources */,
 				D149793B28D56FBE0022778C /* NoteViewModelTestDouble.swift in Sources */,
 				D1A53C9E28D448BB00871E8F /* NoteRepositoryTest.swift in Sources */,
+				D149795128D598740022778C /* NewNoteViewControllerTest.swift in Sources */,
 				D149793F28D570280022778C /* NoteValidationStub.swift in Sources */,
 				D1A53CA328D4681E00871E8F /* HttpUtilityTest.swift in Sources */,
 			);

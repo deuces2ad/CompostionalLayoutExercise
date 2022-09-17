@@ -10,11 +10,11 @@ import UIKit
 class NotesDashBoardViewController: UIViewController {
     
     //MARK: - Private variables
-    private let dashboardViewModel: NoteViewModelProtocol = NoteViewModelFactory.createNoteViewModelFactory()
+    var dashboardViewModel: NoteViewModelProtocol = NoteViewModelFactory.createNoteViewModel()
     private let cardBackgroundCount = ApplicationColor.cardBackgrounds.count
     private let rootView: NotesRootView = NotesRootView()
     private var colorIndex = UIConstant.firstColorIndex
-    private var notesItems = [Note]()
+    var notesItems = [Note]()
     
     //MARK: - LifeCycle methods
     override func loadView() {
