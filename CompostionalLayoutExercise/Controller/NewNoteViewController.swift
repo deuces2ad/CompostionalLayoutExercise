@@ -67,8 +67,8 @@ class NewNoteViewController : UIViewController {
     }
     
     private func popViewController() {
-        self.navigationController?.navigationBar.isHidden = false
-        self.navigationController?.navigationBar.prefersLargeTitles = true
+//        self.navigationController?.navigationBar.isHidden = false
+//        self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.popViewController(animated: true)
     }
     

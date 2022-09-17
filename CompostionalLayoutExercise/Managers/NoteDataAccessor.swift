@@ -27,7 +27,7 @@ class NoteDataAccessor: NoteDataAccessorProtocol {
     }
     
     func fetchNote() -> Array<Note>? {
-       return noteRepository.getAll()
+       return noteRepository.getNotes()
     }
     
     func fetchNoteById(byIdentifier id: UUID) -> Note? {

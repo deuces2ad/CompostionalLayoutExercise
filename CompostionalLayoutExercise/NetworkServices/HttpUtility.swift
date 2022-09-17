@@ -11,12 +11,13 @@ enum HTTPMethod : String {
     case GET = "GET"
 }
 
-enum ErrorType {
+enum ErrorType: Error {
     case InvalidURL
+    case decodeFailure
 }
 
 protocol HttpUtilityProtocol {
-    func get(request: URLRequest,completion: @escaping (Result<Array<NoteResponseModel>,Error>)-> Void)
+    func get(request: URLRequest,completion: @escaping (Result<Array<NoteResponseModel>,ErrorType>)-> Void)
 }
 final class HttpUtility: HttpUtilityProtocol {
     
@@ -24,7 +25,7 @@ final class HttpUtility: HttpUtilityProtocol {
     
     private init () {}
     
-    func get(request: URLRequest,completion: @escaping (Result<Array<NoteResponseModel>,Error>)-> Void) {
+    func get(request: URLRequest,completion: @escaping (Result<Array<NoteResponseModel>,ErrorType>)-> Void) {
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let _ = error {
@@ -36,6 +37,8 @@ final class HttpUtility: HttpUtilityProtocol {
             if let data = data {
                 if let result = self.decodeData(with: data){
                     completion(.success(result))
+                }else{
+                    completion(.failure(ErrorType.decodeFailure))
                 }
             }
         }.resume()
@@ -58,7 +61,10 @@ extension ErrorType : LocalizedError {
     var message : String {
         switch self {
         case .InvalidURL:
-            return NSLocalizedString("InValid Url", comment: "InValid Url")
+            return NSLocalizedString(ServiceError.invalidURL, comment: ServiceError.invalidURL)
+            
+        case .decodeFailure:
+            return NSLocalizedString(ServiceError.decodeFailure, comment: ServiceError.decodeFailure)
         }
     }
 }

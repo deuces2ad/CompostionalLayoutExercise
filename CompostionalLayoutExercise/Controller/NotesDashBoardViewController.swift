@@ -10,7 +10,7 @@ import UIKit
 class NotesDashBoardViewController: UIViewController {
     
     //MARK: - Private variables
-    private let dashboardViewModel = NoteViewModel() // TODO: Use factory
+    private let dashboardViewModel = NoteViewModel()
     private let cardBackgroundCount = ApplicationColor.cardBackgrounds.count
     private let rootView: NotesRootView = NotesRootView()
     private var colorIndex = UIConstant.firstColorIndex
@@ -25,6 +25,12 @@ class NotesDashBoardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initialSetup()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     private func initialSetup() {
@@ -63,6 +69,8 @@ class NotesDashBoardViewController: UIViewController {
     private func navigateToNewNoteViewController() {
         let addNewNotesViewController = NewNoteViewController()
         addNewNotesViewController.newNoteListener = {  newNote in
+            self.navigationController?.navigationBar.isHidden = true
+            self.navigationController?.navigationBar.prefersLargeTitles = false
             let result = self.dashboardViewModel.saveNote(note: newNote)
             if(result.isSaved) {
                 self.notesItems.append(newNote)

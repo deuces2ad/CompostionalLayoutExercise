@@ -9,14 +9,14 @@ import XCTest
 @testable import CompostionalLayoutExercise
 
 class HttpUtilitySpy: HttpUtilityProtocol {
-    
-    var capturedRequest = [(request: URLRequest, completion: (Result<Array<CompostionalLayoutExercise.NoteResponseModel>, Error>) -> Void)]()
+
+    var capturedRequest = [(request: URLRequest, completion: (Result<Array<CompostionalLayoutExercise.NoteResponseModel>, ErrorType>) -> Void)]()
     var requests: [URLRequest] {
         return capturedRequest.map{ $0.request }
     }
     
     
-    func get(request: URLRequest, completion: @escaping (Result<Array<CompostionalLayoutExercise.NoteResponseModel>, Error>) -> Void) {
+    func get(request: URLRequest, completion: @escaping (Result<Array<CompostionalLayoutExercise.NoteResponseModel>, ErrorType>) -> Void) {
         capturedRequest.append((request, completion))
     }
 }

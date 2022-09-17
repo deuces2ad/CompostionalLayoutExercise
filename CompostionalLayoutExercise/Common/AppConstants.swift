@@ -22,6 +22,11 @@ struct ServiceEndPoint {
     static let getNotes               = URL(string:"https://raw.githubusercontent.com/RishabhRaghunath/JustATest/master/notes")
 }
 
+struct ServiceError {
+    static let invalidURL       = "InValid Url"
+    static let decodeFailure    = "Failed to decode json response"
+}
+
 struct UIConstant {
     static let alertTitle             = "Daily Note"
     static let noInternetAlertMessage = "No internet connectivity,please check your internet connection."

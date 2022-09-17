@@ -10,11 +10,11 @@ import XCTest
 
 class NoteViewModelTest: XCTestCase {
     
-    func test_When_executes_GetNotes_Returns_Notes_From_NoteService() {
+    func test_GetNotes_FromService_Returns_NotesCollection() {
         
         // ARRANGE
-        let noteViewModel = NoteViewModelTestDouble(savesNote: true, isNotesSynced: true)
-
+        let noteViewModel = NoteViewModelTestDouble(savesNote: true, isNotesSynced: false)
+        
         // ACT
         noteViewModel.getNotes { notes in
             // ASSERT
@@ -23,10 +23,10 @@ class NoteViewModelTest: XCTestCase {
         }
     }
     
-    func test_When_executes_GetNotes_Returns_Notes_From_Storage() {
+    func test_GetNotes_FromStorage_Returns_NotesCollection() {
         // ARRANGE
-        let noteViewModel = NoteViewModelTestDouble(savesNote: false, isNotesSynced: false)
-
+        let noteViewModel = NoteViewModelTestDouble(savesNote: false, isNotesSynced: true)
+        
         // ACT
         noteViewModel.getNotes { notes in
             // ASSERT
@@ -34,119 +34,42 @@ class NoteViewModelTest: XCTestCase {
             XCTAssertFalse(notes!.isEmpty)
         }
     }
-}
-
-
-class NoteViewModelTestDouble: NoteViewModelProtocol {
     
-    private let savesNotes: Bool
-    private let isNotesSynced: Bool
-    
-    init(savesNote: Bool, isNotesSynced: Bool) {
-        self.savesNotes = savesNote
-        self.isNotesSynced = isNotesSynced
+    func test_SaveNote_WithValidNote_Returns_Success() {
+        
+        // ARRANGE
+        let noteToSave = createValidNote()
+        let noteViewModel = NoteViewModelTestDouble(isValidNote: true)
+        
+        //ACT
+        let result = noteViewModel.saveNote(note: noteToSave)
+        
+        //ASSERT
+        XCTAssertTrue(result.isSaved)
+        XCTAssertNil(result.errorMessage)
     }
     
-    func getNotes(completion: @escaping ((Array<CompostionalLayoutExercise.Note>?) -> Void)) {
-        let userDefaults = createUserDefaultStub(isNoteSynced: isNotesSynced)
-        let notesSyncStatus = userDefaults.value(forKey: AppConstant.isNotesSynced) as! Bool
-        if notesSyncStatus {
-            completion(stubNotesFromStorage())
-        } else {
-            completion(stubNotesFromService())
-        }
+    func test_SaveNote_WithInvalidNote_Returns_Failure() {
+        
+        // ARRANGE
+        let noteViewModel = NoteViewModelTestDouble(isValidNote: false)
+        let noteToSave = createInValidNote()
+        
+        //ACT
+        let result = noteViewModel.saveNote(note: noteToSave)
+        
+        //ASSERT
+        XCTAssertFalse(result.isSaved)
+        XCTAssertNotNil(result.errorMessage)
+        //XCTAssertEqual(ValidationConstant.emptyTitle, result.errorMessage)
     }
     
-    func saveNote(note: CompostionalLayoutExercise.Note) -> SavingNoteResult {
-        let noteManager = createNoteManager(savesNote: savesNotes)
-        let result = noteManager.saveNote(note: note)
-        if result {
-            return SavingNoteResult(isSaved: noteManager.saveNote(note: note), errorMessage: nil)
-        }
-        return SavingNoteResult(isSaved: false, errorMessage: "Error")
+    // MARK: Private Methods
+    private func createValidNote() -> Note {
+        return Note(id: UUID(), title: "test title", image: nil, description: "test description", creationDate: Date(), imageData: nil)
     }
     
-    func createNotesFromNoteService() -> NoteServiceProtocol {
-        return ServiceFactory().createNoteService()
-    }
-    
-    func createNoteManager(savesNote: Bool) -> NoteDataAccessorProtocol {
-        if savesNote {
-            return NoteDataAccessorValidStub()
-        }
-        return NoteDataAccessorInValidStub()
-    }
-    
-    //MARK: - Private Methods
-    private func createUserDefaultStub(isNoteSynced: Bool) -> UserDefaults {
-        var userDefaults =  UserDefaults.init(suiteName: "notesSyncedUserDefault")!
-        if isNoteSynced {
-            userDefaults.set(true, forKey: AppConstant.isNotesSynced)
-            return userDefaults
-        }
-        userDefaults.set(false, forKey: AppConstant.isNotesSynced)
-        return userDefaults
-    }
-    
-    func getNotesFromService() -> Array<Note> {
-        return stubNotesFromService()
-    }
-    
-    func getNotesFromStorage() -> Array<Note> {
-        return stubNotesFromStorage()
-    }
-    
-    private func stubNotesFromService() -> [Note] {
-        return  [Note(id: UUID(), title: "test title", image: nil, description: "test description", creationDate: Date(), imageData: nil)]
-    }
-    
-    private func stubNotesFromStorage() -> [Note] {
-        return  [Note(id: UUID(), title: "test title", image: nil, description: "test description", creationDate: Date(), imageData: nil),
-                 Note(id: UUID(), title: "Another test title ", image: nil, description: "Another test description", creationDate: Date(), imageData: nil)]
-    }
-    
-}
-
-
-class NoteDataAccessorValidStub: NoteDataAccessorProtocol {
-    
-    private var noteRepository: NoteRepository = NoteRepositoryFactory().createNoteRepository()
-    
-    func saveNote(note : Note) -> Bool {
-       return false
-    }
-    
-    func saveNotes(notes: Array<Note>) -> Bool {
-        return noteRepository.saveNotes(notes: notes)
-    }
-    
-    func fetchNote() -> Array<Note>? {
-       return noteRepository.getAll()
-    }
-    
-    func fetchNoteById(byIdentifier id: UUID) -> Note? {
-        return noteRepository.get(byIdentifier: id)
+    private func createInValidNote() -> Note {
+        return Note(id: UUID(), title: AppConstant.emptyString, image: nil, description: AppConstant.emptyString, creationDate: Date(), imageData: nil)
     }
 }
-
-class NoteDataAccessorInValidStub: NoteDataAccessorProtocol {
-    
-    private var noteRepository: NoteRepository = NoteRepositoryFactory().createNoteRepository()
-    
-    func saveNote(note : Note) -> Bool {
-       return true
-    }
-    
-    func saveNotes(notes: Array<Note>) -> Bool {
-        return noteRepository.saveNotes(notes: notes)
-    }
-    
-    func fetchNote() -> Array<Note>? {
-       return noteRepository.getAll()
-    }
-    
-    func fetchNoteById(byIdentifier id: UUID) -> Note? {
-        return noteRepository.get(byIdentifier: id)
-    }
-}
-
