@@ -37,4 +37,4 @@ This task involves building a Notes app which allows you to create new notes to 
 <img src="./ScreenShots/Note_Details.png" width="200" height="400"/>
 
 ## Unit Test Code Coverage
-<img src="./ScreenShots/TestCodeCoverage.png" width="" height="400"/>
+<img src="./ScreenShots/CodeCoverage.png" width="" height="400"/>
