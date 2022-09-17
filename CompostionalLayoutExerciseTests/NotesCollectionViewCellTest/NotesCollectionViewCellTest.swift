@@ -25,7 +25,6 @@ class NotesCollectionViewCellTest: XCTestCase {
         XCTAssertEqual(cell.noteCreationDateLabel.text, dateForAssertion)
     }
     
-    
     private func createNotesCollectionViewCell() -> NotesCollectionViewCell {
         return NotesCollectionViewCell(frame: .zero)
     }

@@ -39,22 +39,8 @@ final class NoteRepositoryTest: XCTestCase {
             }
             return ""
         }
-        
         // ASSERT
         XCTAssertTrue(result)
         XCTAssertEqual(noteTitle, "this is test note title")
     }
-//    
-//    func test_Get_Note_By_Id_Returns_Success() {
-//        
-//    // ARRANGE
-//        let id = (noteRepository.fetchNote()?.first?.id)!
-//        
-//        // ACT
-//        let note = noteRepository.fetchNoteById(byIdentifier: id)
-//        
-//        // ASSERT
-//        XCTAssertNotNil(note)
-//        
-//    }
 }

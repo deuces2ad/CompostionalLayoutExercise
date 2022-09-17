@@ -56,7 +56,6 @@
 		D1A53CBE28D4C95200871E8F /* HttpUtilitySpyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A53CBD28D4C95200871E8F /* HttpUtilitySpyTest.swift */; };
 		D1A53CC028D4D23700871E8F /* NoteViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A53CBF28D4D23700871E8F /* NoteViewModelTest.swift */; };
 		D1A98F7028D344DB00ECD861 /* NoteValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A98F6F28D344DB00ECD861 /* NoteValidationTest.swift */; };
-		D1A98F7228D350B800ECD861 /* RepositoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A98F7128D350B800ECD861 /* RepositoryFactory.swift */; };
 		D1A98F7428D3549100ECD861 /* ServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A98F7328D3549100ECD861 /* ServiceFactory.swift */; };
 		D1A98F7628D35AC200ECD861 /* HttpUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A98F7528D35AC200ECD861 /* HttpUtility.swift */; };
 		D1A98F7928D3877900ECD861 /* NoteResponseModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A98F7828D3877900ECD861 /* NoteResponseModelExtensions.swift */; };
@@ -132,7 +131,6 @@
 		D1A53CBF28D4D23700871E8F /* NoteViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModelTest.swift; sourceTree = "<group>"; };
 		D1A98F6628D33EF800ECD861 /* CompostionalLayoutExerciseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CompostionalLayoutExerciseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1A98F6F28D344DB00ECD861 /* NoteValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteValidationTest.swift; sourceTree = "<group>"; };
-		D1A98F7128D350B800ECD861 /* RepositoryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryFactory.swift; sourceTree = "<group>"; };
 		D1A98F7328D3549100ECD861 /* ServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFactory.swift; sourceTree = "<group>"; };
 		D1A98F7528D35AC200ECD861 /* HttpUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpUtility.swift; sourceTree = "<group>"; };
 		D1A98F7828D3877900ECD861 /* NoteResponseModelExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteResponseModelExtensions.swift; sourceTree = "<group>"; };
@@ -481,7 +479,6 @@
 			children = (
 				D1E055FB28D0439B0014E674 /* CoreDataSupportFiles */,
 				D1E0561D28D058AE0014E674 /* NoteDataRespository.swift */,
-				D1A98F7128D350B800ECD861 /* RepositoryFactory.swift */,
 				D1A98F7C28D389EC00ECD861 /* NoteRepositoryFactory.swift */,
 			);
 			path = Repository;
@@ -647,7 +644,6 @@
 				D1A98F7928D3877900ECD861 /* NoteResponseModelExtensions.swift in Sources */,
 				D19BBCE328D20560009037D4 /* InternetConnectivity.swift in Sources */,
 				D1A0623628CB7D9300229512 /* SceneDelegate.swift in Sources */,
-				D1A98F7228D350B800ECD861 /* RepositoryFactory.swift in Sources */,
 				D149795328D59D0F0022778C /* UIViewController + Extension.swift in Sources */,
 				D15F21A228CCDB0800AB7B7C /* UIVIew + NSLayoutConstraints.swift in Sources */,
 			);
