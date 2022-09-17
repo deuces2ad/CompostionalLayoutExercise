@@ -49,13 +49,13 @@ class NoteViewModel: NoteViewModelProtocol {
     }
     
     private func createNotes(with notesToSave: [Note]) {
-        guard notesToSave.isEmpty else { return }
-        let result = ((noteDataAccessor?.saveNotes(notes: notesToSave)) != nil)
-        result ?
-        UserDefaults.standard.setValue(true, forKey: AppConstant.isNotesSynced) :
-        UserDefaults.standard.setValue(false, forKey: AppConstant.isNotesSynced)
+        if !notesToSave.isEmpty  {
+            let result = ((noteDataAccessor?.saveNotes(notes: notesToSave)) != nil)
+            result ?
+            UserDefaults.standard.setValue(true, forKey: AppConstant.isNotesSynced) :
+            UserDefaults.standard.setValue(false, forKey: AppConstant.isNotesSynced)
+        }
     }
-    
     private func getNotesFromStorage(completion: (([Note]?) -> Void)) {
         completion(noteDataAccessor?.fetchNote())
     }

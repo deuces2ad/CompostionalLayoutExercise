@@ -10,7 +10,7 @@ import UIKit
 class NotesDashBoardViewController: UIViewController {
     
     //MARK: - Private variables
-    private let dashboardViewModel = NoteViewModel()
+    private let dashboardViewModel: NoteViewModelProtocol = NoteViewModelFactory.createNoteViewModelFactory()
     private let cardBackgroundCount = ApplicationColor.cardBackgrounds.count
     private let rootView: NotesRootView = NotesRootView()
     private var colorIndex = UIConstant.firstColorIndex

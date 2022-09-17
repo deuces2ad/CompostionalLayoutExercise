@@ -13,6 +13,7 @@
 		D149793D28D570110022778C /* NoteDataAccessorValidStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149793C28D570110022778C /* NoteDataAccessorValidStub.swift */; };
 		D149793F28D570280022778C /* NoteValidationStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149793E28D570280022778C /* NoteValidationStub.swift */; };
 		D149794128D571020022778C /* CDNoteExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149794028D571020022778C /* CDNoteExtension.swift */; };
+		D149794328D58D730022778C /* NoteViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149794228D58D730022778C /* NoteViewModelFactory.swift */; };
 		D15F219F28CCD8A500AB7B7C /* NotesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15F219E28CCD8A500AB7B7C /* NotesCollectionViewCell.swift */; };
 		D15F21A228CCDB0800AB7B7C /* UIVIew + NSLayoutConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15F21A128CCDB0800AB7B7C /* UIVIew + NSLayoutConstraints.swift */; };
 		D15F21A428CD76FF00AB7B7C /* NotesRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15F21A328CD76FF00AB7B7C /* NotesRootView.swift */; };
@@ -78,6 +79,7 @@
 		D149793C28D570110022778C /* NoteDataAccessorValidStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDataAccessorValidStub.swift; sourceTree = "<group>"; };
 		D149793E28D570280022778C /* NoteValidationStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteValidationStub.swift; sourceTree = "<group>"; };
 		D149794028D571020022778C /* CDNoteExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDNoteExtension.swift; sourceTree = "<group>"; };
+		D149794228D58D730022778C /* NoteViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModelFactory.swift; sourceTree = "<group>"; };
 		D15F219E28CCD8A500AB7B7C /* NotesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCollectionViewCell.swift; sourceTree = "<group>"; };
 		D15F21A128CCDB0800AB7B7C /* UIVIew + NSLayoutConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIew + NSLayoutConstraints.swift"; sourceTree = "<group>"; };
 		D15F21A328CD76FF00AB7B7C /* NotesRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesRootView.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				D1706F1828CC50C3003689DD /* NoteViewModel.swift */,
+				D149794228D58D730022778C /* NoteViewModelFactory.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -550,6 +553,7 @@
 				D1706F1928CC50C3003689DD /* NoteViewModel.swift in Sources */,
 				D1E0560B28D0559D0014E674 /* NotePersistence.xcdatamodeld in Sources */,
 				D15F21BB28CDD09000AB7B7C /* Note.swift in Sources */,
+				D149794328D58D730022778C /* NoteViewModelFactory.swift in Sources */,
 				D1A53CBC28D4ABB200871E8F /* ValidationResult.swift in Sources */,
 				D1A0623828CB7D9300229512 /* NotesDashBoardViewController.swift in Sources */,
 				D1706F0E28CC4792003689DD /* LayoutBuilder.swift in Sources */,
