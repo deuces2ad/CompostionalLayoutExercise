@@ -11,44 +11,29 @@ import CoreData
 protocol NoteRepository: AnyObject {
     func save(note: Note) -> Bool
     func saveNotes(notes: Array<Note>) -> Bool
-    func getAll() -> [Note]?
+    func getNotes() -> [Note]?
     func get(byIdentifier id : UUID) -> Note?
 }
 
 class NoteDataRepository: NoteRepository {
     
     func save(note: Note) -> Bool {
-        let cdNote = CDNote(context: PersistenceStorage.shared.persistentContainer.viewContext)
-        cdNote.id = note.id
-        cdNote.noteTitle = note.title
-        cdNote.noteDescription = note.description
-        cdNote.noteImage = note.imageData
-        cdNote.noteImageUrl = note.image
-        cdNote.noteCreationDate = note.creationDate
-        
+        createNoteManagedObjectInStorage(note: note)
         return PersistenceStorage.shared.saveContext()
     }
     
     func saveNotes(notes: Array<Note>) -> Bool {
-        
-        for note in notes {
-            let cdNote = CDNote(context: PersistenceStorage.shared.persistentContainer.viewContext)
-            cdNote.id = note.id
-            cdNote.noteTitle = note.title
-            cdNote.noteDescription = note.description
-            cdNote.noteImage = note.imageData
-            cdNote.noteImageUrl = note.image
-            cdNote.noteCreationDate = note.creationDate
+        for noteToAdd in notes {
+            createNoteManagedObjectInStorage(note: noteToAdd)
         }
-        
         return PersistenceStorage.shared.saveContext()
     }
     
-    func getAll() -> [Note]? {
+    func getNotes() -> Array<Note>? {
         let result = PersistenceStorage.shared.fetchManagedObject(managedObject: CDNote.self)
         var notes : [Note] = []
         result?.forEach({ cdNote in
-            notes.append(cdNote.convertToNote())
+            notes.append(cdNote.toNote())
         })
         return notes
     }
@@ -56,10 +41,21 @@ class NoteDataRepository: NoteRepository {
     func get(byIdentifier id: UUID) -> Note? {
         let result = getNote(byIdentifier: id)
         guard result != nil else {return nil}
-        return result?.convertToNote()
+        return result?.toNote()
     }
     
-    func getNote(byIdentifier id : UUID)-> CDNote? {
+    // MARK: Private Method
+    func createNoteManagedObjectInStorage(note: Note) {
+        let cdNote = CDNote(context: PersistenceStorage.shared.persistentContainer.viewContext)
+        cdNote.id = note.id
+        cdNote.noteTitle = note.title
+        cdNote.noteDescription = note.description
+        cdNote.noteImage = note.imageData
+        cdNote.noteImageUrl = note.image
+        cdNote.noteCreationDate = note.creationDate
+    }
+    
+    private func getNote(byIdentifier id : UUID)-> CDNote? {
         let fetchRequest  = NSFetchRequest<CDNote>(entityName: "CDNote")
         let sortDescriptor  = NSSortDescriptor(key: "noteCreationDate", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]

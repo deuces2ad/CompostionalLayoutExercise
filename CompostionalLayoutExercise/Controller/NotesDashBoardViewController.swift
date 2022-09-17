@@ -10,11 +10,11 @@ import UIKit
 class NotesDashBoardViewController: UIViewController {
     
     //MARK: - Private variables
-    private let dashboardViewModel = NoteViewModel() // TODO: Use factory
+    var dashboardViewModel: NoteViewModelProtocol = NoteViewModelFactory.createNoteViewModel()
     private let cardBackgroundCount = ApplicationColor.cardBackgrounds.count
     private let rootView: NotesRootView = NotesRootView()
     private var colorIndex = UIConstant.firstColorIndex
-    private var notesItems = [Note]()
+    var notesItems = [Note]()
     
     //MARK: - LifeCycle methods
     override func loadView() {
@@ -25,6 +25,12 @@ class NotesDashBoardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initialSetup()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     private func initialSetup() {
@@ -63,17 +69,16 @@ class NotesDashBoardViewController: UIViewController {
     private func navigateToNewNoteViewController() {
         let addNewNotesViewController = NewNoteViewController()
         addNewNotesViewController.newNoteListener = {  newNote in
+            self.navigationController?.navigationBar.isHidden = true
+            self.navigationController?.navigationBar.prefersLargeTitles = false
             let result = self.dashboardViewModel.saveNote(note: newNote)
-            //TODO: Fix tuple type
-            let saveResult = result.0
-            if(saveResult) {
+            if(result.isSaved) {
                 self.notesItems.append(newNote)
                 DispatchQueue.main.async {
                     self.rootView.notesCollectionView.reloadData()
                 }
             }else {
-                let errorMessage = result.1
-                self.showAlert(with: UIConstant.alertTitle, message: errorMessage ?? AppConstant.emptyString)
+                self.showAlert(with: UIConstant.alertTitle, message: result.errorMessage ?? AppConstant.emptyString)
             }
         }
         self.navigationController?.pushViewController(addNewNotesViewController, animated: true)

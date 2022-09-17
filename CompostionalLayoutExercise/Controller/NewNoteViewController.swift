@@ -11,34 +11,33 @@ class NewNoteViewController : UIViewController {
     
     //MARK: - Private Variables
     private var userSelectedNoteImage : UIImage?
-
-
+    
     var newNoteListener : ((Note)->Void)? = nil
-
+    
     //MARK: - View Life cycle
+    override func loadView() {
+        super.loadView()
+        view = rootView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateNavBarProperties()
         registerListeners()
     }
     
-    override func loadView() {
-        super.loadView()
-        view = rootView
-    }
-    
-   //MARK: - Properties
-    private lazy var rootView : AddNewNoteRootView = {
+    //MARK: - Properties
+    lazy var rootView : AddNewNoteRootView = {
         let rootView = AddNewNoteRootView()
         rootView.backgroundColor = ApplicationColor.darkBackground
         return rootView
     }()
     
     private lazy var imagePicker: ImagePicker = {
-           let imagePicker = ImagePicker()
-           imagePicker.delegate = self
-           return imagePicker
-       }()
+        let imagePicker = ImagePicker()
+        imagePicker.delegate = self
+        return imagePicker
+    }()
     
     //MARK: - Private Methods
     private func updateNavBarProperties() {
@@ -55,7 +54,7 @@ class NewNoteViewController : UIViewController {
         
         ///ImagePicker Button Listener
         rootView.imagePickerListener = { [weak self] in
-         self?.imagePicker.photoGalleryAccessRequest()
+            self?.imagePicker.photoGalleryAccessRequest()
         }
         
         ///SaveNote Button Listener
@@ -67,8 +66,6 @@ class NewNoteViewController : UIViewController {
     }
     
     private func popViewController() {
-        self.navigationController?.navigationBar.isHidden = false
-        self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -77,11 +74,11 @@ class NewNoteViewController : UIViewController {
         let noteDescription = rootView.newNoteDescriptionTextView.text ?? AppConstant.emptyString
         let noteImage = image?.jpegData(compressionQuality: 1.0)
         return Note(id: UUID(),
-                               title: noteTitle,
-                               image: nil,
-                               description: noteDescription,
-                               creationDate: Date(),
-                               imageData: noteImage)
+                    title: noteTitle,
+                    image: nil,
+                    description: noteDescription,
+                    creationDate: Date(),
+                    imageData: noteImage)
     }
     
     private func saveToLocalDataBase(for note :Note) {

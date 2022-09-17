@@ -57,7 +57,7 @@ class AddNewNoteRootView : UIView {
         return button
     }()
     
-    private lazy var saveNoteButton : UIButton = {
+     lazy var saveNoteButton : UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Save", for: .normal)
         button.addTarget(self, action: #selector(saveNoteAction), for: .touchUpInside)

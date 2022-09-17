@@ -8,18 +8,24 @@
 import Foundation
 
 protocol NoteServiceProtocol : AnyObject {
-    func getNotes(completion: @escaping (Result<Array<NoteResponseModel>,Error>)-> Void)
+    func getNotes(completion: @escaping (Array<Note>?)-> Void)
 }
 
 class NoteService: NoteServiceProtocol {
     
-    func getNotes(completion: @escaping (Result<Array<NoteResponseModel>,Error>)-> Void){
+    func getNotes(completion: @escaping (Array<Note>?)-> Void){
         
         guard let url = ServiceEndPoint.getNotes else {return}
         var request = URLRequest(url: url)
         request.httpMethod = HTTPMethod.GET.rawValue
         HttpUtility.shared.get(request: request) { response in
-            completion(response)
+            
+            switch response {
+            case .success(let noteCollection):
+                completion(noteCollection.toNotes())
+            case .failure(_):
+                completion(nil)
+            }
         }
     }
 }

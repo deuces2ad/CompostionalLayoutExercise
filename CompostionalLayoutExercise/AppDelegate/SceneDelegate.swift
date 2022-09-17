@@ -17,8 +17,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let controller = NotesDashBoardViewController()
         self.window = UIWindow(windowScene: windowScene)
         self.window?.rootViewController = UINavigationController(rootViewController: controller)
-        let _ = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-//        print("path is",path)
+        let path = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        print("path is",path)
         InternetConnectivity.shared.monitorConnectionStatus()
         self.window?.makeKeyAndVisible()
         

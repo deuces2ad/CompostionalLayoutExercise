@@ -28,37 +28,56 @@ class HttpUtilityTest: XCTestCase {
                 XCTAssertFalse(noteCollection.isEmpty)
                 XCTAssertEqual(noteCollection.first?.title, "How to grow your online presence")
                 expectation.fulfill()
-            case .failure(let error):
-                XCTAssertNil(error)
-                expectation.fulfill()
+            case .failure(_): break
             }
         })
         waitForExpectations(timeout: 3)
     }
     
-    //TODO: Need to check up...
-//    func test_HttpUtility_With_InValidRequest_Returns_Failure() {
-//
-//        // ARRANGE
-//        let invalidUrl = URL(string: "https://httpbin.org/get")!
-//        let request = createURLRequest(url: invalidUrl)
-//        let httpUtility = HttpUtility.shared
-//        let expectation = expectation(description: "ValidRequest_Returns_Success")
-//
-//        // ACT
-//        httpUtility.get(request: request, completion: { response in
-//
-//            switch response {
-//            case .success(let response):
-//                XCTAssertNil(response)
-//            case .failure(let error):
-//                // ASSERT
-//                XCTAssertNotNil(error)
-//                expectation.fulfill()
-//            }
-//        })
-//        waitForExpectations(timeout: 10)
-//    }
+    func test_HttpUtility_With_NonExistingURL_Returns_Failure() {
+        
+        // ARRANGE
+        let invalidUrl = URL(string: "https://raw.githubusercontent.com/RishabhRaghunath/JustATest/master/nots")!
+        let request = createURLRequest(url: invalidUrl)
+        let httpUtility = HttpUtility.shared
+        let expectation = expectation(description: "ValidRequest_Returns_Success")
+        
+        // ACT
+        httpUtility.get(request: request) { response in
+            switch response {
+            case .success(_):break
+            case .failure(let errorType):
+                // ASSERT
+                XCTAssertNotNil(errorType)
+                XCTAssertEqual(ServiceError.invalidURL, errorType.message)
+                expectation.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 3)
+    }
+    
+    func test_Get_With_InvalidRequest_Returns_Failure() {
+        
+        // ARRANGE
+        let invalidUrl = URL(string: "https://httpbin.org/get")!
+        let request = createURLRequest(url: invalidUrl)
+        let httpUtility = HttpUtility.shared
+        let expectation = expectation(description: "ValidRequest_Returns_Success")
+        
+        // ACT
+        httpUtility.get(request: request, completion: { response in
+            
+            switch response {
+            case .success(_): break
+            case .failure(let error):
+                // ASSERT
+                XCTAssertNotNil(error)
+                XCTAssertEqual(ServiceError.decodeFailure, error.message)
+                expectation.fulfill()
+            }
+        })
+        waitForExpectations(timeout: 3)
+    }
     
     //MARK: - Create URL Request
     private func createURLRequest(url: URL = ServiceEndPoint.getNotes!) -> URLRequest {

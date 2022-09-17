@@ -20,7 +20,7 @@ class NotesCollectionViewCell : UICollectionViewCell {
     }
     
     //MARK: - Properties
-    private lazy var titleLabel: UILabel = {
+    public lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.adjustsFontSizeToFitWidth = true
@@ -30,7 +30,7 @@ class NotesCollectionViewCell : UICollectionViewCell {
         return label
     }()
     
-    private lazy var noteCreationDateLabel : UILabel = {
+    public lazy var noteCreationDateLabel : UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.adjustsFontSizeToFitWidth = true

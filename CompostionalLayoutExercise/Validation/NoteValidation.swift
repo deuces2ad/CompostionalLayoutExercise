@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct NoteValidation {
+protocol NoteValidationProtocol {
+    func validate(note: Note) -> ValidationResult
+}
+
+class NoteValidation: NoteValidationProtocol {
     
     func validate(note: Note) -> ValidationResult {
         
