@@ -7,7 +7,6 @@
 
 import UIKit
  
-
 class AddNewNoteRootView : UIView {
     
     //MARK: - Private variable

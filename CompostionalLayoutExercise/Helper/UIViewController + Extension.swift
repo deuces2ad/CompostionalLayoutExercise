@@ -11,7 +11,6 @@ extension UIViewController {
     
     func triggerLifecycleIfNeeded() {
         guard !isViewLoaded else { return }
-        
         loadViewIfNeeded()
         beginAppearanceTransition(true, animated: false)
         endAppearanceTransition()

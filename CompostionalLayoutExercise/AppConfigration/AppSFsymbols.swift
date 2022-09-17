@@ -5,7 +5,6 @@
 //  Created by Abhishek Dhiman on 12/09/22.
 //
 
-import Foundation
 import UIKit
 
 enum AppSfSymbols: String {

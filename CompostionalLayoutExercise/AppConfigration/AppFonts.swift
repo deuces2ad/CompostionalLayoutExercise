@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 struct AppFont {
     static let noteDescriptionFont = UIFont(name: "Avenir Book", size: 22.0)
     static let noteTitleFont = UIFont.systemFont(ofSize: 35, weight: .bold)
